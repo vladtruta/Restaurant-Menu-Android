@@ -5,8 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.vladtruta.restaurantmenu.R
 import com.vladtruta.restaurantmenu.data.model.local.MenuCourse
 import com.vladtruta.restaurantmenu.databinding.ListItemMenuCourseBinding
+import com.vladtruta.restaurantmenu.utils.ImageHelper
+import com.vladtruta.restaurantmenu.utils.UIUtils
 
 class MenuCoursesAdapter(private val listener: OnMenuCourseClickListener) :
     ListAdapter<MenuCourse, MenuCoursesAdapter.ViewHolder>(MenuCourseDiffCallback()) {
@@ -43,10 +46,9 @@ class MenuCoursesAdapter(private val listener: OnMenuCourseClickListener) :
         }
 
         fun bind(menuCourse: MenuCourse) {
-            binding.menuEntryNameTv.text = menuCourse.name
-            binding.menuEntryPortionSizeTv.text = menuCourse.portionSize
-            binding.menuEntryPriceTv.text = menuCourse.price.toString()
-            binding.menuEntryIv
+            binding.courseNameTv.text = menuCourse.name
+            binding.coursePriceTv.text = UIUtils.getString(R.string.price_dollars, menuCourse.price)
+            ImageHelper.loadImage(itemView.context, binding.courseIv, menuCourse.photoUrl)
         }
     }
 

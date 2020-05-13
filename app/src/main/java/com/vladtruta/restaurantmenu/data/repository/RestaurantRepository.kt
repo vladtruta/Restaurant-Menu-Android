@@ -15,21 +15,19 @@ object RestaurantRepository {
     private val restaurantDao = restaurantDatabase.restaurantDao
 
     //region API
-    suspend fun refreshCategories(): Result<Unit> {
+    suspend fun refreshCategories() {
         return try {
             val categories = restaurantNetwork.getAllCategories()
             restaurantDao.insertCategories(*categories.toTypedArray())
-            Result.success(Unit)
         } catch (error: Exception) {
             throw Exception("Unable to refresh categories", error)
         }
     }
 
-    suspend fun refreshMenuCourses(): Result<Unit> {
+    suspend fun refreshMenuCourses() {
         return try {
             val menuCourses = restaurantNetwork.getAllMenuCourses()
             restaurantDao.insertMenuCourses(*menuCourses.toTypedArray())
-            Result.success(Unit)
         } catch (error: Exception) {
             throw Exception("Unable to refresh menu courses", error)
         }

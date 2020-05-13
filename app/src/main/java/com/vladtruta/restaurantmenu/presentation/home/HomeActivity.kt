@@ -56,6 +56,9 @@ class HomeActivity : AppCompatActivity(), CategoriesAdapter.OnCategoryClickListe
     }
 
     override fun onMenuCourseClicked(menuCourse: MenuCourse) {
-
+        CourseDetailsDialogFragment.newInstance(menuCourse).show(
+            supportFragmentManager,
+            CourseDetailsDialogFragment.TAG
+        )
     }
 }

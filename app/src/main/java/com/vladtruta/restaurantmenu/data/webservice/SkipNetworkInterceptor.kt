@@ -154,7 +154,7 @@ class SkipNetworkInterceptor : Interceptor {
         return makeErrorResult(chain.request())
     }
 
-    private fun pretendToBlockForNetworkRequest() = Thread.sleep(5000L)
+    private fun pretendToBlockForNetworkRequest() = Thread.sleep(1000L)
 
     private fun makeOkResult(request: Request, body: Any): Response {
         return Response.Builder()

@@ -20,7 +20,7 @@ class SplashViewModel : ViewModel() {
                 RestaurantRepository.clearDatabase()
                 loadDataFromNetwork()
                 refreshSuccessful.value = true
-            } catch(error: Exception) {
+            } catch (error: Exception) {
                 refreshErrorMessage.value = error.message
             }
         }

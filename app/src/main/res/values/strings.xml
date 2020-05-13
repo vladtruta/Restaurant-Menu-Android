@@ -3,4 +3,8 @@
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
     <string name="tap_to_retry">Tap to retry</string>
+
+    <string name="price_dollars">$%1$d</string>
+    <string name="add">Add</string>
+    <string name="choose_quantity">Choose quantity</string>
 </resources>
