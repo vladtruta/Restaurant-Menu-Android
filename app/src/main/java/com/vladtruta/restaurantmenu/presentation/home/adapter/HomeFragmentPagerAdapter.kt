@@ -12,18 +12,23 @@ class HomeFragmentPagerAdapter(fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     companion object {
         private const val ITEM_COUNT = 2
+
         private val ITEM_TITLES = arrayOf(
             UIUtils.getString(R.string.menu),
             UIUtils.getString(R.string.cart)
         )
+
+        enum class HOME_TABS {
+            MENU, CART
+        }
     }
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> {
+            HOME_TABS.MENU.ordinal -> {
                 MenuFragment()
             }
-            1 -> {
+            HOME_TABS.CART.ordinal -> {
                 CartFragment()
             }
             else -> {

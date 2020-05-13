@@ -8,6 +8,7 @@ import com.google.android.material.tabs.TabLayout
 import com.vladtruta.restaurantmenu.R
 import com.vladtruta.restaurantmenu.databinding.ActivityHomeBinding
 import com.vladtruta.restaurantmenu.presentation.home.adapter.HomeFragmentPagerAdapter
+import com.vladtruta.restaurantmenu.presentation.home.adapter.HomeFragmentPagerAdapter.Companion.HOME_TABS
 import com.vladtruta.restaurantmenu.utils.UIUtils
 import com.vladtruta.restaurantmenu.widgets.OnTabSelectedListenerImpl
 
@@ -35,8 +36,8 @@ class HomeActivity : AppCompatActivity() {
         binding.homeVp.adapter = homeFragmentPagerAdapter
 
         binding.homeTl.setupWithViewPager(binding.homeVp)
-        binding.homeTl.getTabAt(0)?.setIcon(R.drawable.ic_restaurant_menu)
-        binding.homeTl.getTabAt(1)?.setIcon(R.drawable.ic_shopping_cart)
+        binding.homeTl.getTabAt(HOME_TABS.MENU.ordinal)?.setIcon(R.drawable.ic_restaurant_menu)
+        binding.homeTl.getTabAt(HOME_TABS.CART.ordinal)?.setIcon(R.drawable.ic_shopping_cart)
     }
 
     private fun initObservers() {
@@ -53,13 +54,13 @@ class HomeActivity : AppCompatActivity() {
 
     private fun updateTab(tab: TabLayout.Tab?) {
         when (tab?.position) {
-            0 -> {
+            HOME_TABS.MENU.ordinal -> {
                 binding.cartFab.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_shopping_cart))
-                binding.cartFab.setOnClickListener { binding.homeTl.getTabAt(1)?.select() }
+                binding.cartFab.setOnClickListener { binding.homeTl.getTabAt(HOME_TABS.CART.ordinal)?.select() }
             }
-            1 -> {
+            HOME_TABS.CART.ordinal -> {
                 binding.cartFab.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_restaurant_menu))
-                binding.cartFab.setOnClickListener { binding.homeTl.getTabAt(0)?.select() }
+                binding.cartFab.setOnClickListener { binding.homeTl.getTabAt(HOME_TABS.MENU.ordinal)?.select() }
             }
         }
     }
