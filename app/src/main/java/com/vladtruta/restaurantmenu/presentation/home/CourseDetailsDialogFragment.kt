@@ -31,7 +31,7 @@ class CourseDetailsDialogFragment : DialogFragment(),
     }
 
     private lateinit var binding: DialogCourseDetailsBinding
-    private val courseDetailsViewModel by viewModels<CourseDetailsViewModel>()
+    private val viewModel by viewModels<CourseDetailsViewModel>()
 
     private lateinit var menuCourse: MenuCourse
 
@@ -59,7 +59,7 @@ class CourseDetailsDialogFragment : DialogFragment(),
         initObservers()
         initActions()
 
-        courseDetailsViewModel.checkIfItemAlreadyExists(menuCourse.id)
+        viewModel.checkIfItemAlreadyExists(menuCourse.id)
     }
 
     private fun initViews() {
@@ -71,7 +71,7 @@ class CourseDetailsDialogFragment : DialogFragment(),
     }
 
     private fun initObservers() {
-        courseDetailsViewModel.errorMessage.observe(this, Observer {
+        viewModel.errorMessage.observe(this, Observer {
             val errorMessage = UIUtils.getString(R.string.error_message)
             Snackbar.make(binding.addToCardEfab, errorMessage, Snackbar.LENGTH_SHORT).show()
         })
@@ -88,7 +88,7 @@ class CourseDetailsDialogFragment : DialogFragment(),
     }
 
     override fun onQuantityChosen(quantity: Int) {
-        courseDetailsViewModel.addToOrUpdateCart(menuCourse, quantity)
+        viewModel.addToOrUpdateCart(menuCourse, quantity)
 
         val successMessage = UIUtils.getString(
             R.string.add_to_cart_success,
@@ -97,7 +97,7 @@ class CourseDetailsDialogFragment : DialogFragment(),
         )
         Snackbar.make(binding.addToCardEfab, successMessage, Snackbar.LENGTH_LONG)
             .setAction(getString(R.string.undo)) {
-                courseDetailsViewModel.undoCart(quantity)
+                viewModel.undoCart(quantity)
             }
             .show()
     }

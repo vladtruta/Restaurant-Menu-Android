@@ -1,64 +1,44 @@
 package com.vladtruta.restaurantmenu.presentation.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import com.vladtruta.restaurantmenu.data.model.local.Category
-import com.vladtruta.restaurantmenu.data.model.local.MenuCourse
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentPagerAdapter
+import com.vladtruta.restaurantmenu.R
 import com.vladtruta.restaurantmenu.databinding.ActivityHomeBinding
-import com.vladtruta.restaurantmenu.presentation.home.adapter.CategoriesAdapter
-import com.vladtruta.restaurantmenu.presentation.home.adapter.MenuCoursesAdapter
+import com.vladtruta.restaurantmenu.presentation.home.adapter.HomeFragmentPagerAdapter
 
-class HomeActivity : AppCompatActivity(), CategoriesAdapter.OnCategoryClickListener,
-    MenuCoursesAdapter.OnMenuCourseClickListener {
+class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    private val homeViewModel by viewModels<HomeViewModel>()
+    private val viewModel by viewModels<HomeViewModel>()
 
-    private lateinit var categoriesAdapter: CategoriesAdapter
-    private lateinit var menuCoursesAdapter: MenuCoursesAdapter
+    private lateinit var homeFragmentPagerAdapter: FragmentPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initRecyclerViews()
+        initViews()
         initObservers()
         initActions()
     }
 
-    private fun initObservers() {
-        homeViewModel.categories.observe(this, Observer {
-            categoriesAdapter.submitList(it)
-        })
+    private fun initViews() {
+        homeFragmentPagerAdapter = HomeFragmentPagerAdapter(supportFragmentManager)
+        binding.homeVp.adapter = homeFragmentPagerAdapter
 
-        homeViewModel.filteredMenuCourses.observe(this, Observer {
-            menuCoursesAdapter.submitList(it)
-        })
+        binding.homeTl.setupWithViewPager(binding.homeVp)
+        binding.homeTl.getTabAt(0)?.setIcon(R.drawable.ic_restaurant_menu)
+        binding.homeTl.getTabAt(1)?.setIcon(R.drawable.ic_shopping_cart)
     }
 
-    private fun initRecyclerViews() {
-        categoriesAdapter = CategoriesAdapter(this)
-        binding.categoriesRv.adapter = categoriesAdapter
+    private fun initObservers() {
 
-        menuCoursesAdapter = MenuCoursesAdapter(this)
-        binding.menuCoursesRv.adapter = menuCoursesAdapter
     }
 
     private fun initActions() {
 
-    }
-
-    override fun onCategoryClicked(category: Category) {
-        homeViewModel.getMenuCoursesByCategory(category)
-    }
-
-    override fun onMenuCourseClicked(menuCourse: MenuCourse) {
-        CourseDetailsDialogFragment.newInstance(menuCourse).show(
-            supportFragmentManager,
-            CourseDetailsDialogFragment.TAG
-        )
     }
 }

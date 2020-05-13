@@ -36,8 +36,7 @@
                 android:layout_gravity="top|end"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_close"
-                app:fabSize="normal" />
+                android:src="@drawable/ic_close" />
 
         </FrameLayout>
 
