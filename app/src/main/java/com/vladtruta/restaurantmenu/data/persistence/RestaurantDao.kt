@@ -8,14 +8,8 @@ import com.vladtruta.restaurantmenu.data.model.local.MenuCourse
 
 @Dao
 interface RestaurantDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertMenuCourses(vararg menuCourses: MenuCourse)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCategories(vararg categories: Category)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCartItems(vararg cartItems: CartItem)
 
     @Query("SELECT * FROM menuCourses")
     fun getAllMenuCourses(): LiveData<List<MenuCourse>>
@@ -23,18 +17,36 @@ interface RestaurantDao {
     @Query("SELECT * FROM menuCourses WHERE category = :category")
     suspend fun getMenuCoursesByCategory(category: String): List<MenuCourse>
 
+    @Query("DELETE FROM menuCourses")
+    suspend fun clearMenuCourses()
+
+    @Insert
+    suspend fun insertCategories(vararg categories: Category)
+
     @Query("SELECT * FROM categories")
     fun getAllCategories(): LiveData<List<Category>>
-
-    @Query("SELECT * FROM cartItems")
-    fun getAllCartItems(): LiveData<List<CartItem>>
 
     @Query("DELETE FROM categories")
     suspend fun clearCategories()
 
-    @Query("DELETE FROM menuCourses")
-    suspend fun clearMenuCourses()
+    @Insert
+    suspend fun addItemToCart(cartItem: CartItem): Long
+
+    @Query("SELECT * FROM cartItems")
+    fun getAllCartItems(): LiveData<List<CartItem>>
+
+    @Query("SELECT * FROM cartItems WHERE id = :id")
+    suspend fun getCartItemById(id: Int): CartItem?
+
+    @Query("SELECT id FROM cartItems WHERE menuCourseid = :id")
+    suspend fun getCartItemIdByMenuCourseId(id: Int): Int?
+
+    @Update
+    suspend fun updateCartItem(cartItem: CartItem)
+
+    @Query("DELETE FROM cartItems WHERE id = :id")
+    suspend fun deleteItemFromCartById(id: Int)
 
     @Query("DELETE FROM cartItems")
-    suspend fun clearCartItems()
+    suspend fun clearCart()
 }

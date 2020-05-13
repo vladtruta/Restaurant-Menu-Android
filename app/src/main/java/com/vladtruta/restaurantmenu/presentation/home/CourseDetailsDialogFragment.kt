@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.vladtruta.restaurantmenu.R
 import com.vladtruta.restaurantmenu.data.model.local.MenuCourse
 import com.vladtruta.restaurantmenu.databinding.DialogCourseDetailsBinding
 import com.vladtruta.restaurantmenu.utils.ImageHelper
 import com.vladtruta.restaurantmenu.utils.UIUtils
 
-class CourseDetailsDialogFragment : DialogFragment(), ChooseQuantityDialogFragment.ChooseQuantityListener {
+class CourseDetailsDialogFragment : DialogFragment(),
+    ChooseQuantityDialogFragment.ChooseQuantityListener {
     companion object {
         const val TAG = "CourseDetailsDialogFragment"
         private const val ARG_MENU_COURSE = "ARG_MENU_COURSE"
@@ -27,6 +31,7 @@ class CourseDetailsDialogFragment : DialogFragment(), ChooseQuantityDialogFragme
     }
 
     private lateinit var binding: DialogCourseDetailsBinding
+    private val courseDetailsViewModel by viewModels<CourseDetailsViewModel>()
 
     private lateinit var menuCourse: MenuCourse
 
@@ -51,7 +56,10 @@ class CourseDetailsDialogFragment : DialogFragment(), ChooseQuantityDialogFragme
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
+        initObservers()
         initActions()
+
+        courseDetailsViewModel.checkIfItemAlreadyExists(menuCourse.id)
     }
 
     private fun initViews() {
@@ -62,18 +70,36 @@ class CourseDetailsDialogFragment : DialogFragment(), ChooseQuantityDialogFragme
         binding.courseDescriptionTv.text = menuCourse.description
     }
 
+    private fun initObservers() {
+        courseDetailsViewModel.errorMessage.observe(this, Observer {
+            val errorMessage = UIUtils.getString(R.string.error_message)
+            Snackbar.make(binding.addToCardEfab, errorMessage, Snackbar.LENGTH_SHORT).show()
+        })
+    }
+
     private fun initActions() {
         binding.closeFab.setOnClickListener {
             dismissAllowingStateLoss()
         }
 
-        binding.addToCardEfb.setOnClickListener {
+        binding.addToCardEfab.setOnClickListener {
             openQuantityPicker()
         }
     }
 
     override fun onQuantityChosen(quantity: Int) {
-        // Make call
+        courseDetailsViewModel.addToOrUpdateCart(menuCourse, quantity)
+
+        val successMessage = UIUtils.getString(
+            R.string.add_to_cart_success,
+            quantity,
+            menuCourse.name
+        )
+        Snackbar.make(binding.addToCardEfab, successMessage, Snackbar.LENGTH_LONG)
+            .setAction(getString(R.string.undo)) {
+                courseDetailsViewModel.undoCart(quantity)
+            }
+            .show()
     }
 
     private fun openQuantityPicker() {

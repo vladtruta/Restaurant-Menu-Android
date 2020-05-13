@@ -7,4 +7,8 @@
     <string name="price_dollars">$%1$d</string>
     <string name="add">Add</string>
     <string name="choose_quantity">Choose quantity</string>
+    <string name="add_to_cart_success">Added %1$d %2$s to cart.</string>
+    <string name="undo">Undo</string>
+    <string name="error_message">An error has occured, please try again.</string>
+    <string name="retry">Retry</string>
 </resources>

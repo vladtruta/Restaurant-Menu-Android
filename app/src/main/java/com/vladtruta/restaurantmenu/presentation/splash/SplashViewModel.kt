@@ -1,28 +1,31 @@
 package com.vladtruta.restaurantmenu.presentation.splash
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vladtruta.restaurantmenu.data.repository.RestaurantRepository
 import kotlinx.coroutines.*
-import java.lang.Exception
 
 class SplashViewModel : ViewModel() {
 
-    val refreshSuccessful = MutableLiveData<Boolean>()
-    val refreshErrorMessage = MutableLiveData<String>()
+    private val _refreshSuccessful = MutableLiveData<Boolean>()
+    val refreshSuccessful: LiveData<Boolean> = _refreshSuccessful
+
+    private val _refreshErrorMessage = MutableLiveData<String>()
+    val refreshErrorMessage: LiveData<String> = _refreshErrorMessage
+
+    private val messageExceptionHandler = CoroutineExceptionHandler { _, error ->
+        _refreshErrorMessage.value = error.message
+    }
 
     fun refresh() {
-        refreshSuccessful.value = false
-        refreshErrorMessage.value = ""
-        viewModelScope.launch {
-            try {
-                RestaurantRepository.clearDatabase()
-                loadDataFromNetwork()
-                refreshSuccessful.value = true
-            } catch (error: Exception) {
-                refreshErrorMessage.value = error.message
-            }
+        _refreshSuccessful.value = false
+        _refreshErrorMessage.value = ""
+        viewModelScope.launch(messageExceptionHandler) {
+            RestaurantRepository.clearDatabase()
+            loadDataFromNetwork()
+            _refreshSuccessful.value = true
         }
     }
 

@@ -8,12 +8,14 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
     val categories = RestaurantRepository.getAllCategories()
-    val filteredMenuCourses = MutableLiveData<List<MenuCourse>>()
+
+    private val _filteredMenuCourses = MutableLiveData<List<MenuCourse>>()
+    val filteredMenuCourses: LiveData<List<MenuCourse>> = _filteredMenuCourses
 
     fun getMenuCoursesByCategory(category: Category) {
         viewModelScope.launch {
             val result = RestaurantRepository.getMenuCoursesByCategory(category.name)
-            filteredMenuCourses.value = result
+            _filteredMenuCourses.value = result
         }
     }
 }

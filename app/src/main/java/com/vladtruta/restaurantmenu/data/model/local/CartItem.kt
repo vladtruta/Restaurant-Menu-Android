@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 data class CartItem(
     @Embedded(prefix = "menuCourse")
     val menuCourse: MenuCourse,
-    val quantity: Int,
+    var quantity: Int,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 ): Parcelable

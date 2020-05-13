@@ -1,6 +1,7 @@
 package com.vladtruta.restaurantmenu.data.repository
 
 import androidx.lifecycle.LiveData
+import com.vladtruta.restaurantmenu.data.model.local.CartItem
 import com.vladtruta.restaurantmenu.data.model.local.Category
 import com.vladtruta.restaurantmenu.data.model.local.MenuCourse
 import com.vladtruta.restaurantmenu.data.webservice.getNetwork
@@ -36,41 +37,45 @@ object RestaurantRepository {
 
     //region Database
     suspend fun clearDatabase() {
-        restaurantDao.clearCartItems()
+        restaurantDao.clearCart()
         restaurantDao.clearMenuCourses()
         restaurantDao.clearCategories()
-    }
-
-    suspend fun insertMenuCourses(vararg menuCourses: MenuCourse) {
-        restaurantDao.insertMenuCourses(*menuCourses)
-    }
-
-    suspend fun insertCategories(vararg categories: Category) {
-        restaurantDao.insertCategories(*categories)
-    }
-
-    fun getAllMenuCourses(): LiveData<List<MenuCourse>> {
-        return restaurantDao.getAllMenuCourses()
-    }
-
-    suspend fun getMenuCoursesByCategory(category: String): List<MenuCourse> {
-        return restaurantDao.getMenuCoursesByCategory(category)
     }
 
     fun getAllCategories(): LiveData<List<Category>> {
         return restaurantDao.getAllCategories()
     }
 
-    suspend fun clearCategories() {
-        restaurantDao.clearCategories()
+    suspend fun getMenuCoursesByCategory(category: String): List<MenuCourse> {
+        return restaurantDao.getMenuCoursesByCategory(category)
     }
 
-    suspend fun clearMenuCourses() {
-        restaurantDao.clearMenuCourses()
+    suspend fun addItemToCart(menuCourse: MenuCourse, quantity: Int): Long {
+        val item = CartItem(menuCourse, quantity)
+        return restaurantDao.addItemToCart(item)
+    }
+
+    suspend fun updateQuantityInCart(id: Int, quantity: Int) {
+        val cartItem = getCartItemById(id)
+        restaurantDao.updateCartItem(cartItem.apply { this.quantity += quantity })
+    }
+
+    suspend fun getCartItemById(id: Int): CartItem {
+        return restaurantDao.getCartItemById(id)
+            ?: throw Exception("Could not find item with id $id")
+    }
+
+    suspend fun getCartItemIdByMenuCourseId(id: Int): Int {
+        return restaurantDao.getCartItemIdByMenuCourseId(id)
+            ?: throw Exception("Could not find cart item id with menuCourseId $id")
+    }
+
+    suspend fun deleteItemFromCart(id: Int) {
+        restaurantDao.deleteItemFromCartById(id)
     }
 
     suspend fun clearCartItems() {
-        restaurantDao.clearCartItems()
+        restaurantDao.clearCart()
     }
     ///endregion
 }
