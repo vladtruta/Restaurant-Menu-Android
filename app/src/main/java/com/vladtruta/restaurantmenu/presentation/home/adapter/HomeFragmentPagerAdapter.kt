@@ -14,7 +14,7 @@ class HomeFragmentPagerAdapter(fm: FragmentManager) :
         private const val ITEM_COUNT = 2
         private val ITEM_TITLES = arrayOf(
             UIUtils.getString(R.string.menu),
-            UIUtils.getString(R.string.menu)
+            UIUtils.getString(R.string.cart)
         )
     }
 
