@@ -36,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
             }
         })
 
-        splashViewModel.refreshErrorMessage.observe(this, Observer {
+        splashViewModel.errorMessage.observe(this, Observer {
             if (it.isNullOrEmpty()) {
                 binding.tapToRetryTv.visibility = View.GONE
             } else {

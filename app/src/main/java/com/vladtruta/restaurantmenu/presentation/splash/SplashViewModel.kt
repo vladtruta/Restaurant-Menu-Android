@@ -12,16 +12,16 @@ class SplashViewModel : ViewModel() {
     private val _refreshSuccessful = MutableLiveData<Boolean>()
     val refreshSuccessful: LiveData<Boolean> = _refreshSuccessful
 
-    private val _refreshErrorMessage = MutableLiveData<String>()
-    val refreshErrorMessage: LiveData<String> = _refreshErrorMessage
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> = _errorMessage
 
     private val messageExceptionHandler = CoroutineExceptionHandler { _, error ->
-        _refreshErrorMessage.value = error.message
+        _errorMessage.value = error.message
     }
 
     fun refresh() {
         _refreshSuccessful.value = false
-        _refreshErrorMessage.value = ""
+        _errorMessage.value = ""
         viewModelScope.launch(messageExceptionHandler) {
             RestaurantRepository.clearDatabase()
             loadDataFromNetwork()
