@@ -8,7 +8,7 @@
     tools:context=".presentation.home.MenuFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/categoriesRv"
+        android:id="@+id/categories_rv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="?attr/colorPrimary"
@@ -23,7 +23,7 @@
         android:background="?attr/dividerVertical" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/menuCoursesRv"
+        android:id="@+id/menu_courses_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

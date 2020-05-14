@@ -68,15 +68,4 @@
         android:text="@string/cart"
         app:icon="@drawable/ic_shopping_cart" />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/payment_efab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/pay"
-        app:icon="@drawable/ic_payment"
-        tools:layout_marginEnd="150dp" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

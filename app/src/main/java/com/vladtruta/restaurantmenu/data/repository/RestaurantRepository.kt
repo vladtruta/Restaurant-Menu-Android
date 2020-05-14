@@ -4,9 +4,12 @@ import androidx.lifecycle.LiveData
 import com.vladtruta.restaurantmenu.data.model.local.CartItem
 import com.vladtruta.restaurantmenu.data.model.local.Category
 import com.vladtruta.restaurantmenu.data.model.local.MenuCourse
+import com.vladtruta.restaurantmenu.data.model.local.OrderedItem
 import com.vladtruta.restaurantmenu.data.persistence.getDatabase
 import com.vladtruta.restaurantmenu.data.webservice.getNetwork
 import com.vladtruta.restaurantmenu.utils.RestaurantApp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 object RestaurantRepository {
 
@@ -16,21 +19,25 @@ object RestaurantRepository {
 
     //region API
     suspend fun refreshCategories() {
-        return try {
-            val categories = restaurantNetwork.getAllCategories()
-            restaurantDao.insertCategories(*categories.toTypedArray())
-        } catch (error: Exception) {
-            throw Exception("Unable to refresh categories", error)
+        val categories = withContext(Dispatchers.Default) {
+            try {
+                restaurantNetwork.getAllCategories().toTypedArray()
+            } catch (error: Exception) {
+                throw Exception("Unable to refresh categories", error)
+            }
         }
+        restaurantDao.insertCategories(*categories)
     }
 
     suspend fun refreshMenuCourses() {
-        return try {
-            val menuCourses = restaurantNetwork.getAllMenuCourses()
-            restaurantDao.insertMenuCourses(*menuCourses.toTypedArray())
-        } catch (error: Exception) {
-            throw Exception("Unable to refresh menu courses", error)
+        val menuCourses = withContext(Dispatchers.Default) {
+            try {
+                restaurantNetwork.getAllMenuCourses().toTypedArray()
+            } catch (error: Exception) {
+                throw Exception("Unable to refresh menu courses", error)
+            }
         }
+        restaurantDao.insertMenuCourses(*menuCourses)
     }
     //endregion
 
@@ -39,6 +46,8 @@ object RestaurantRepository {
         restaurantDao.clearCart()
         restaurantDao.clearMenuCourses()
         restaurantDao.clearCategories()
+        restaurantDao.clearCart()
+        restaurantDao.clearOrderedItems()
     }
 
     fun getAllCategories(): LiveData<List<Category>> {
@@ -53,21 +62,28 @@ object RestaurantRepository {
         return restaurantDao.getAllCartItems()
     }
 
+    fun getCartItemsTotalPrice(): LiveData<Int> {
+        return restaurantDao.getCartItemsTotalPrice()
+    }
+
     suspend fun addItemToCart(menuCourse: MenuCourse, quantity: Int): Long {
         val item = CartItem(menuCourse, quantity)
         return restaurantDao.addItemToCart(item)
     }
 
     suspend fun addQuantityToAlreadyExistingInCart(id: Int, quantity: Int) {
-        val cartItem = restaurantDao.getCartItemById(id)
-            ?: throw Exception("Could not find item with id $id")
+        val cartItem = getCartItemById(id)
         restaurantDao.updateCartItem(cartItem.apply { this.quantity += quantity })
     }
 
     suspend fun updateQuantityInCart(id: Int, quantity: Int) {
-        val cartItem = restaurantDao.getCartItemById(id)
-            ?: throw Exception("Could not find item with id $id")
+        val cartItem = getCartItemById(id)
         restaurantDao.updateCartItem(cartItem.apply { this.quantity = quantity })
+    }
+
+    suspend fun getCartItemById(id: Int): CartItem {
+        return restaurantDao.getCartItemById(id)
+            ?: throw Exception("Could not find item with id $id")
     }
 
     suspend fun getCartItemIdByMenuCourseId(id: Int): Int {
@@ -79,8 +95,33 @@ object RestaurantRepository {
         restaurantDao.deleteItemFromCartById(id)
     }
 
-    suspend fun clearCartItems() {
+    suspend fun clearCart() {
         restaurantDao.clearCart()
+    }
+
+    fun getAllOrderedItems(): LiveData<List<OrderedItem>> {
+        return restaurantDao.getAllOrderedItems()
+    }
+
+    fun getOrderedItemsTotalPrice(): LiveData<Int> {
+        return restaurantDao.getOrderedItemsTotalPrice()
+    }
+
+    suspend fun insertOrUpdateOrderedItems(cartItems: List<CartItem>) {
+        withContext(Dispatchers.Default) {
+            cartItems.forEach { cartItem ->
+                val orderedItem = restaurantDao.getOrderedItemByMenuCourseId(cartItem.menuCourse.id)
+                orderedItem?.let {
+                    restaurantDao.updateOrderedItem(it.apply { this.cartItem.quantity += cartItem.quantity })
+                } ?: run {
+                    restaurantDao.insertOrderedItem(OrderedItem(cartItem))
+                }
+            }
+        }
+    }
+
+    suspend fun clearOrderedItems() {
+        restaurantDao.clearOrderedItems()
     }
     ///endregion
 }

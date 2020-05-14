@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(tableName = "cartItems")
+@Entity(tableName = "cart")
 data class CartItem(
-    @Embedded(prefix = "menuCourse")
+    @Embedded(prefix = "menuCourse_")
     val menuCourse: MenuCourse,
     var quantity: Int,
     @PrimaryKey(autoGenerate = true)

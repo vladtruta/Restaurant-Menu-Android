@@ -16,6 +16,9 @@ class CartViewModel : ViewModel() {
     }
 
     val cartItems = RestaurantRepository.getAllCartItems()
+    val orderedItems = RestaurantRepository.getAllOrderedItems()
+    val cartItemsTotalPrice = RestaurantRepository.getCartItemsTotalPrice()
+    val orderedItemsTotalPrice = RestaurantRepository.getOrderedItemsTotalPrice()
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
@@ -23,15 +26,27 @@ class CartViewModel : ViewModel() {
     var selectedCartItemId = RecyclerView.NO_POSITION
 
     fun updateQuantityInCart(id: Int, quantity: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(messageExceptionHandler) {
             RestaurantRepository.updateQuantityInCart(id, quantity)
-            _errorMessage.value = "a"
         }
     }
 
     fun deleteItemFromCart(id: Int) {
         viewModelScope.launch {
             RestaurantRepository.deleteItemFromCart(id)
+        }
+    }
+
+    fun insertOrderedItems() {
+        viewModelScope.launch {
+            RestaurantRepository.insertOrUpdateOrderedItems(cartItems.value!!)
+            RestaurantRepository.clearCart()
+        }
+    }
+
+    fun payForOrder() {
+        viewModelScope.launch {
+            RestaurantRepository.clearOrderedItems()
         }
     }
 }

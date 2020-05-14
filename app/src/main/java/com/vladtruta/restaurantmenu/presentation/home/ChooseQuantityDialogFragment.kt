@@ -10,7 +10,6 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.vladtruta.restaurantmenu.R
 import com.vladtruta.restaurantmenu.databinding.DialogChooseQuantityBinding
-import com.vladtruta.restaurantmenu.utils.UIUtils
 
 class ChooseQuantityDialogFragment : DialogFragment() {
     companion object {
@@ -32,11 +31,11 @@ class ChooseQuantityDialogFragment : DialogFragment() {
         binding = DialogChooseQuantityBinding.inflate(layoutInflater, null, false)
 
         return MaterialAlertDialogBuilder(requireContext())
-            .setTitle(UIUtils.getString(R.string.choose_quantity))
-            .setPositiveButton("OK") { _, _ ->
+            .setTitle(R.string.choose_quantity)
+            .setPositiveButton(R.string.ok) { _, _ ->
                 listener?.onQuantityChosen(binding.quantityNp.value)
             }
-            .setNegativeButton("Cancel") { _, _ -> }
+            .setNegativeButton(R.string.cancel) { _, _ -> }
             .setView(binding.root)
             .create()
     }

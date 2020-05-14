@@ -60,22 +60,16 @@ class HomeActivity : AppCompatActivity() {
         binding.cartEfab.setOnClickListener {
             binding.homeTl.getTabAt(HOME_TABS.CART.ordinal)?.select()
         }
-
-        binding.paymentEfab.setOnClickListener {
-            // Do payment
-        }
     }
 
     private fun updateTab(tab: TabLayout.Tab?) {
         when (tab?.position) {
             HOME_TABS.MENU.ordinal -> {
                 binding.menuEfab.hide()
-                binding.paymentEfab.hide()
                 binding.cartEfab.show()
             }
             HOME_TABS.CART.ordinal -> {
                 binding.menuEfab.show()
-                binding.paymentEfab.show()
                 binding.cartEfab.hide()
             }
         }

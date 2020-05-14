@@ -1,19 +1,18 @@
 package com.vladtruta.restaurantmenu.data.model.local
 
 import android.os.Parcelable
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(tableName = "menu")
-data class MenuCourse(
-    val category: String,
-    val name: String,
-    val description: String,
-    val photoUrl: String,
-    val portionSize: String,
-    val price: Int,
+@Entity(tableName = "orders")
+data class OrderedItem(
+    @Embedded(prefix = "cartItem_")
+    val cartItem: CartItem,
+    @Embedded(prefix = "payingCustomer_")
+    val payingCustomer: Customer? = null,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 ) : Parcelable

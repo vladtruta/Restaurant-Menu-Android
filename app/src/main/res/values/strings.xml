@@ -17,4 +17,14 @@
     <string name="quantity_placeholder">x%1$d</string>
     <string name="pay">Pay</string>
     <string name="menu_category_placeholder">Menu - %1$s</string>
+    <string name="confirm">Confirm</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="confirm_order_message">The order will be sent to the kitchen and cannot be canceled afterwards.</string>
+    <string name="price_dollars_total">$%1$d total</string>
+    <string name="confirm_payment_message">Call the waiter before paying for the order.</string>
+    <string name="confirm_payment_title">Pay for order</string>
 </resources>

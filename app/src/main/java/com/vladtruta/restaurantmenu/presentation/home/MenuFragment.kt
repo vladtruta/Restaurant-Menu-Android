@@ -76,8 +76,6 @@ class MenuFragment : Fragment(),
 
     override fun onCategoryClicked(category: Category) {
         viewModel.getMenuCoursesByCategory(category)
-        activityViewModel.toolbarText.value =
-            UIUtils.getString(R.string.menu_category_placeholder, category.name)
     }
 
     override fun onMenuCourseClicked(menuCourse: MenuCourse) {

@@ -4,14 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.vladtruta.restaurantmenu.data.model.local.CartItem
-import com.vladtruta.restaurantmenu.data.model.local.Category
-import com.vladtruta.restaurantmenu.data.model.local.MenuCourse
+import com.vladtruta.restaurantmenu.data.model.local.*
 
 @Database(
-    entities = [Category::class, MenuCourse::class, CartItem::class],
+    entities = [Category::class, MenuCourse::class, CartItem::class, Customer::class, OrderedItem::class],
     version = 1,
-    exportSchema = false
+    exportSchema = true
 )
 abstract class RestaurantDatabase : RoomDatabase() {
     abstract val restaurantDao: RestaurantDao
