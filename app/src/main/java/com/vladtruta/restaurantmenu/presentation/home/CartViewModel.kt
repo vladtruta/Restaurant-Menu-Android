@@ -17,6 +17,7 @@ class CartViewModel : ViewModel() {
 
     val cartItems = RestaurantRepository.getAllCartItems()
     val orderedItems = RestaurantRepository.getAllOrderedItems()
+
     val cartItemsTotalPrice = RestaurantRepository.getCartItemsTotalPrice()
     val orderedItemsTotalPrice = RestaurantRepository.getOrderedItemsTotalPrice()
 
