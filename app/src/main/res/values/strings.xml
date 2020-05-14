@@ -27,4 +27,6 @@
     <string name="price_dollars_total">$%1$d total</string>
     <string name="confirm_payment_message">Call the waiter before paying for the order.</string>
     <string name="confirm_payment_title">Pay for order</string>
+    <string name="pending_empty">Your cart is empty. Order some food from the Menu.</string>
+    <string name="ordered_empty">Currently you have no ordered items.</string>
 </resources>

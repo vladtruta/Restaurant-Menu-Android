@@ -65,8 +65,12 @@ class CartFragment : Fragment(),
         viewModel.cartItems.observe(viewLifecycleOwner, Observer {
             cartPendingAdapter.submitList(it)
             if (!it.isNullOrEmpty()) {
+                binding.pendingEmptyTv.visibility = View.GONE
+                binding.pendingRv.visibility = View.VISIBLE
                 binding.confirmEfab.show()
             } else {
+                binding.pendingEmptyTv.visibility = View.VISIBLE
+                binding.pendingRv.visibility = View.GONE
                 binding.confirmEfab.hide()
             }
         })
@@ -74,8 +78,12 @@ class CartFragment : Fragment(),
         viewModel.orderedItems.observe(viewLifecycleOwner, Observer {
             cartOrderedAdapter.submitList(it)
             if (!it.isNullOrEmpty()) {
+                binding.orderedEmptyTv.visibility = View.GONE
+                binding.orderedRv.visibility = View.VISIBLE
                 binding.payEfab.show()
             } else {
+                binding.orderedEmptyTv.visibility = View.VISIBLE
+                binding.orderedRv.visibility = View.GONE
                 binding.payEfab.hide()
             }
         })

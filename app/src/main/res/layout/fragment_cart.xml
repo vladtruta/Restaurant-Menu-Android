@@ -50,6 +50,16 @@
                 android:layout_height="1dp"
                 android:background="?attr/dividerHorizontal" />
 
+            <TextView
+                android:id="@+id/pending_empty_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="@string/pending_empty"
+                android:textAppearance="?attr/textAppearanceHeadline3"
+                android:visibility="gone" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/pending_rv"
                 android:layout_width="match_parent"
@@ -104,6 +114,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="?attr/dividerHorizontal" />
+
+            <TextView
+                android:id="@+id/ordered_empty_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="@string/ordered_empty"
+                android:textAppearance="?attr/textAppearanceHeadline3"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ordered_rv"

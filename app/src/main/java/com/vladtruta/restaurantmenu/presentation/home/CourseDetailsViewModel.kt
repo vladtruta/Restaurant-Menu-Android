@@ -37,9 +37,9 @@ class CourseDetailsViewModel : ViewModel() {
         viewModelScope.launch(messageExceptionHandler) {
             if (rowId == DEFAULT_ROW_ID) {
                 rowId = RestaurantRepository.addItemToCart(menuCourse, quantity).toInt()
-                itemAlreadyExists = true
             } else {
                 RestaurantRepository.addQuantityToAlreadyExistingInCart(rowId, quantity)
+                itemAlreadyExists = true
             }
         }
     }
