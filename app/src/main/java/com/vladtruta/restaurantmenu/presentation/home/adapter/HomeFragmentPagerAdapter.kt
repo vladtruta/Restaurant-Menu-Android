@@ -40,8 +40,4 @@ class HomeFragmentPagerAdapter(fm: FragmentManager) :
     override fun getCount(): Int {
         return ITEM_COUNT
     }
-
-    override fun getPageTitle(position: Int): CharSequence? {
-        return ITEM_TITLES[position]
-    }
 }

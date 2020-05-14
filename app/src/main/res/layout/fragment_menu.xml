@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".presentation.home.HomeActivity">
+    tools:context=".presentation.home.MenuFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoriesRv"

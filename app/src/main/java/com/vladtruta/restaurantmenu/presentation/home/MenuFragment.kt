@@ -5,20 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.vladtruta.restaurantmenu.R
 import com.vladtruta.restaurantmenu.data.model.local.Category
 import com.vladtruta.restaurantmenu.data.model.local.MenuCourse
 import com.vladtruta.restaurantmenu.databinding.FragmentMenuBinding
 import com.vladtruta.restaurantmenu.presentation.home.adapter.CategoriesAdapter
 import com.vladtruta.restaurantmenu.presentation.home.adapter.MenuCoursesAdapter
+import com.vladtruta.restaurantmenu.utils.UIUtils
 
-class MenuFragment: Fragment(),
+class MenuFragment : Fragment(),
     CategoriesAdapter.OnCategoryClickListener,
     MenuCoursesAdapter.OnMenuCourseClickListener {
 
     private lateinit var binding: FragmentMenuBinding
     private val viewModel by viewModels<MenuViewModel>()
+    private val activityViewModel by activityViewModels<HomeViewModel>()
 
     private lateinit var categoriesAdapter: CategoriesAdapter
     private lateinit var menuCoursesAdapter: MenuCoursesAdapter
@@ -39,6 +43,12 @@ class MenuFragment: Fragment(),
         initActions()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        activityViewModel.toolbarText.value = UIUtils.getString(R.string.menu)
+    }
+
     private fun initViews() {
         categoriesAdapter = CategoriesAdapter(this)
         binding.categoriesRv.adapter = categoriesAdapter
@@ -49,7 +59,10 @@ class MenuFragment: Fragment(),
 
     private fun initObservers() {
         viewModel.categories.observe(viewLifecycleOwner, Observer {
-            categoriesAdapter.submitList(it)
+            categoriesAdapter.submitList(it) {
+                val initialCategory = categoriesAdapter.currentList[categoriesAdapter.checkedPosition]
+                onCategoryClicked(initialCategory)
+            }
         })
 
         viewModel.filteredMenuCourses.observe(viewLifecycleOwner, Observer {
@@ -63,6 +76,8 @@ class MenuFragment: Fragment(),
 
     override fun onCategoryClicked(category: Category) {
         viewModel.getMenuCoursesByCategory(category)
+        activityViewModel.toolbarText.value =
+            UIUtils.getString(R.string.menu_category_placeholder, category.name)
     }
 
     override fun onMenuCourseClicked(menuCourse: MenuCourse) {

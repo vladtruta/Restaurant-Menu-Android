@@ -15,8 +15,8 @@ class SplashViewModel : ViewModel() {
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
 
-    private val messageExceptionHandler = CoroutineExceptionHandler { _, error ->
-        _errorMessage.value = error.message
+    private val messageExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        _errorMessage.value = throwable.message
     }
 
     fun refresh() {

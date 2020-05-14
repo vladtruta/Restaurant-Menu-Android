@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import com.vladtruta.restaurantmenu.data.model.local.CartItem
 import com.vladtruta.restaurantmenu.data.model.local.Category
 import com.vladtruta.restaurantmenu.data.model.local.MenuCourse
-import com.vladtruta.restaurantmenu.data.webservice.getNetwork
 import com.vladtruta.restaurantmenu.data.persistence.getDatabase
+import com.vladtruta.restaurantmenu.data.webservice.getNetwork
 import com.vladtruta.restaurantmenu.utils.RestaurantApp
-import java.lang.Exception
 
 object RestaurantRepository {
 
@@ -50,19 +49,25 @@ object RestaurantRepository {
         return restaurantDao.getMenuCoursesByCategory(category)
     }
 
+    fun getAllCartItems(): LiveData<List<CartItem>> {
+        return restaurantDao.getAllCartItems()
+    }
+
     suspend fun addItemToCart(menuCourse: MenuCourse, quantity: Int): Long {
         val item = CartItem(menuCourse, quantity)
         return restaurantDao.addItemToCart(item)
     }
 
-    suspend fun updateQuantityInCart(id: Int, quantity: Int) {
-        val cartItem = getCartItemById(id)
+    suspend fun addQuantityToAlreadyExistingInCart(id: Int, quantity: Int) {
+        val cartItem = restaurantDao.getCartItemById(id)
+            ?: throw Exception("Could not find item with id $id")
         restaurantDao.updateCartItem(cartItem.apply { this.quantity += quantity })
     }
 
-    suspend fun getCartItemById(id: Int): CartItem {
-        return restaurantDao.getCartItemById(id)
+    suspend fun updateQuantityInCart(id: Int, quantity: Int) {
+        val cartItem = restaurantDao.getCartItemById(id)
             ?: throw Exception("Could not find item with id $id")
+        restaurantDao.updateCartItem(cartItem.apply { this.quantity = quantity })
     }
 
     suspend fun getCartItemIdByMenuCourseId(id: Int): Int {

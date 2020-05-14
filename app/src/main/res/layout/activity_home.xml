@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    tools:context=".presentation.home.HomeActivity">
 
-    <com.vladtruta.restaurantmenu.widgets.NoSwipeViewPager
-        android:id="@+id/home_vp"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/home_mtb"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="0dp"
+            app:navigationIcon="@drawable/ic_menu"
+            tools:title="@string/menu" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/home_tl"
@@ -22,26 +31,52 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:icon="@drawable/ic_restaurant_menu"
-                tools:text="@string/menu" />
+                tools:icon="@drawable/ic_restaurant_menu" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:icon="@drawable/ic_shopping_cart"
-                tools:text="@string/cart" />
+                tools:icon="@drawable/ic_shopping_cart" />
 
         </com.google.android.material.tabs.TabLayout>
 
-    </com.vladtruta.restaurantmenu.widgets.NoSwipeViewPager>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/cart_fab"
+    <com.vladtruta.restaurantmenu.widgets.NoSwipeViewPager
+        android:id="@+id/home_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/menu_efab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/menu"
+        app:icon="@drawable/ic_restaurant_menu" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/cart_efab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_shopping_cart" />
+        android:text="@string/cart"
+        app:icon="@drawable/ic_shopping_cart" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/payment_efab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/pay"
+        app:icon="@drawable/ic_payment"
+        tools:layout_marginEnd="150dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

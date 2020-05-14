@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
 
+
 object UIUtils {
     fun getDimension(@DimenRes resId: Int): Int {
         return RestaurantApp.instance.resources.getDimensionPixelSize(resId)

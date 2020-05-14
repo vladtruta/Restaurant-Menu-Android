@@ -57,7 +57,7 @@ class MenuCoursesAdapter(private val listener: OnMenuCourseClickListener) :
     }
 }
 
-class MenuCourseDiffCallback : DiffUtil.ItemCallback<MenuCourse>() {
+private class MenuCourseDiffCallback : DiffUtil.ItemCallback<MenuCourse>() {
     override fun areItemsTheSame(oldItem: MenuCourse, newItem: MenuCourse): Boolean {
         return oldItem.id == newItem.id
     }

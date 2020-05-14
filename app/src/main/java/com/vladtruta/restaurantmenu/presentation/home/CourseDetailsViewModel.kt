@@ -16,8 +16,8 @@ class CourseDetailsViewModel : ViewModel() {
 
     private val ignoredExceptionHandler = CoroutineExceptionHandler { _, _ -> }
 
-    private val messageExceptionHandler = CoroutineExceptionHandler { _, error ->
-        _errorMessage.value = error.message
+    private val messageExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        _errorMessage.value = throwable.message
     }
 
     private val _errorMessage = MutableLiveData<String>()
@@ -39,7 +39,7 @@ class CourseDetailsViewModel : ViewModel() {
                 rowId = RestaurantRepository.addItemToCart(menuCourse, quantity).toInt()
                 itemAlreadyExists = true
             } else {
-                RestaurantRepository.updateQuantityInCart(rowId, quantity)
+                RestaurantRepository.addQuantityToAlreadyExistingInCart(rowId, quantity)
             }
         }
     }
@@ -47,7 +47,7 @@ class CourseDetailsViewModel : ViewModel() {
     fun undoCart(quantity: Int) {
         viewModelScope.launch(messageExceptionHandler) {
             if (itemAlreadyExists) {
-                RestaurantRepository.updateQuantityInCart(rowId, -quantity)
+                RestaurantRepository.addQuantityToAlreadyExistingInCart(rowId, -quantity)
             } else {
                 RestaurantRepository.deleteItemFromCart(rowId)
                 itemAlreadyExists = false
