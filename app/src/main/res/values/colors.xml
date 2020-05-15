@@ -2,8 +2,10 @@
 <resources>
     <color name="colorPrimary">#99d066</color>
     <color name="colorPrimaryVariant">#689f38</color>
+    <color name="colorPrimaryLight">#cfff95</color>
     <color name="colorOnPrimary">#000000</color>
-    <color name="colorSecondary">#ffe97d</color>
-    <color name="colorSecondaryVariant">#ffb74d</color>
+    <color name="colorSecondary">#ff9100</color>
+    <color name="colorSecondaryVariant">#c56200</color>
+    <color name="colorSecondaryLight">#ffc246</color>
     <color name="colorOnSecondary">#000000</color>
 </resources>

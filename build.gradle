@@ -16,7 +16,8 @@ buildscript {
         def retrofit_gson_version = '2.8.1'
         def retrofit_version = '2.8.1'
         def room_version = '2.2.5'
-        def glide_version = "4.11.0"
+        def glide_version = '4.11.0'
+        def preferences_version = '1.1.0'
 
         libraries = [
                 // Kotlin Standard Library
@@ -45,6 +46,9 @@ buildscript {
 
                 // Glide
                 "com.github.bumptech.glide:glide:$glide_version",
+
+                // Preferences
+                "androidx.preference:preference:$preferences_version"
         ]
 
         librariesKapt = [

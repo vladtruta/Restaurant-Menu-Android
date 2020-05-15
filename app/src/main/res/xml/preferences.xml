@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:key="configure_category"
+        app:title="@string/configure">
+
+        <EditTextPreference
+            app:defaultValue="1"
+            app:key="table_name"
+            app:persistent="true"
+            app:title="@string/table_name"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:defaultValue="1234"
+            app:key="waiter_password"
+            app:persistent="true"
+            app:title="@string/waiter_password"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="reset_category"
+        app:title="@string/reset">
+
+        <EditTextPreference
+            app:key="reset_device"
+            app:title="@string/reset_device" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

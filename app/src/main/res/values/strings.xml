@@ -29,4 +29,10 @@
     <string name="confirm_payment_title">Pay for order</string>
     <string name="pending_empty">Your cart is empty. Order some food from the Menu.</string>
     <string name="ordered_empty">Currently you have no ordered items.</string>
+    <string name="table_name">Table name</string>
+    <string name="waiter_password">Waiter password</string>
+    <string name="reset_device">Reset device</string>
+    <string name="configure">Configure</string>
+    <string name="reset">Reset</string>
+    <string name="settings">Settings</string>
 </resources>
