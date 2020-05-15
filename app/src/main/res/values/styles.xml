@@ -18,6 +18,14 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">false</item>
+    </style>
+
+    <style name="SettingsTheme" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">false</item>
+    </style>
+
     <style name="NumberPickerBigText">
         <item name="android:textSize">24sp</item>
     </style>

@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="m">
-        <activity android:name=".presentation.splash.SplashActivity">
+        <activity
+            android:name=".presentation.splash.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +30,15 @@
 
         <activity
             android:name=".presentation.settings.SettingsActivity"
-            android:parentActivityName=".presentation.home.HomeActivity" />
+            android:label="@string/settings"
+            android:parentActivityName=".presentation.home.HomeActivity"
+            android:theme="@style/SettingsTheme">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.home.HomeActivity" />
+
+        </activity>
     </application>
 
 </manifest>

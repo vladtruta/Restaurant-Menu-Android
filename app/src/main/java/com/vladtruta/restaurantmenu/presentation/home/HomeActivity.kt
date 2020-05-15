@@ -37,6 +37,12 @@ class HomeActivity : AppCompatActivity() {
         updateTab(binding.homeTl.getTabAt(binding.homeTl.selectedTabPosition))
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        navigationHeaderBinding.tableNameTv.text = SessionUtils.getTableName()
+    }
+
     private fun initViews() {
         homeFragmentPagerAdapter = HomeFragmentPagerAdapter(supportFragmentManager)
         binding.homeVp.adapter = homeFragmentPagerAdapter
@@ -44,8 +50,6 @@ class HomeActivity : AppCompatActivity() {
         binding.homeTl.setupWithViewPager(binding.homeVp)
         binding.homeTl.getTabAt(HOME_TABS.MENU.ordinal)?.setIcon(R.drawable.ic_restaurant_menu)
         binding.homeTl.getTabAt(HOME_TABS.CART.ordinal)?.setIcon(R.drawable.ic_shopping_cart)
-
-        navigationHeaderBinding.tableNameTv.text = SessionUtils.getTableName()
     }
 
     private fun initObservers() {
@@ -79,9 +83,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.cartEfab.setOnClickListener {
-            //binding.homeTl.getTabAt(HOME_TABS.CART.ordinal)?.select()
-
-            startActivity(Intent(this, SettingsActivity::class.java))
+            binding.homeTl.getTabAt(HOME_TABS.CART.ordinal)?.select()
         }
     }
 
