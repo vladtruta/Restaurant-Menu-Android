@@ -30,6 +30,8 @@ class QrCodeAnalyzer(private val listener: QrCodesDetectedListener) :
             .addOnFailureListener {
                 listener.onQrCodesDetectFailure(it.message)
             }
+
+        imageProxy.close()
     }
 
     private fun degreesToFirebaseRotation(degrees: Int): Int = when (degrees) {

@@ -19,6 +19,7 @@ buildscript {
         def glide_version = '4.11.0'
         def preferences_version = '1.1.1'
         def ml_kit_version = '24.0.3'
+        def barcode_version = '16.1.1'
         def camerax_version = '1.0.0-beta03'
         def camerax_view_version = '1.0.0-alpha10'
         def easy_permissions_version = '3.0.0'
@@ -56,6 +57,7 @@ buildscript {
 
                 // Firebase MLKit
                 "com.google.firebase:firebase-ml-vision:$ml_kit_version",
+                "com.google.firebase:firebase-ml-vision-barcode-model:$barcode_version",
 
                 // CameraX
                 "androidx.camera:camera-core:$camerax_version",

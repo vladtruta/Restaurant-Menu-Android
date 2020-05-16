@@ -87,8 +87,12 @@ class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
                 try {
                     cameraProvider.unbindAll()
-                    camera =
-                        cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer)
+                    camera = cameraProvider.bindToLifecycle(
+                        this,
+                        cameraSelector,
+                        preview,
+                        imageAnalyzer
+                    )
                     preview?.setSurfaceProvider(camera_txv.createSurfaceProvider(camera?.cameraInfo))
                 } catch (error: Exception) {
                     Log.e(TAG, "Use case binding failed", error)
