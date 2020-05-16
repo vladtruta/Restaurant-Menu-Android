@@ -15,6 +15,7 @@
         <EditTextPreference
             app:defaultValue="1234"
             app:key="waiter_password"
+            app:icon="@drawable/ic_key"
             app:persistent="true"
             app:title="@string/waiter_password"
             app:useSimpleSummaryProvider="true" />

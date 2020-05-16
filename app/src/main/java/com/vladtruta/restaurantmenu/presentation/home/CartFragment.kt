@@ -22,12 +22,14 @@ import com.vladtruta.restaurantmenu.databinding.FragmentCartBinding
 import com.vladtruta.restaurantmenu.presentation.home.adapter.CartOrderedAdapter
 import com.vladtruta.restaurantmenu.presentation.home.adapter.CartPendingAdapter
 import com.vladtruta.restaurantmenu.presentation.qr.QrScanActivity
+import com.vladtruta.restaurantmenu.presentation.settings.WaiterPasswordDialogFragment
 import com.vladtruta.restaurantmenu.utils.UIUtils
 import com.vladtruta.restaurantmenu.widgets.OnItemSelectedListenerImpl
 
 class CartFragment : Fragment(),
     CartPendingAdapter.CartPendingListener,
-    ChooseQuantityDialogFragment.ChooseQuantityListener, CartOrderedAdapter.CartOrderedListener {
+    ChooseQuantityDialogFragment.ChooseQuantityListener, CartOrderedAdapter.CartOrderedListener,
+    WaiterPasswordDialogFragment.WaiterPasswordListener {
 
     private lateinit var binding: FragmentCartBinding
     private val viewModel by viewModels<CartViewModel>()
@@ -69,7 +71,7 @@ class CartFragment : Fragment(),
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         customersView.adapter = adapter
 
-        customersView.onItemSelectedListener = object: OnItemSelectedListenerImpl() {
+        customersView.onItemSelectedListener = object : OnItemSelectedListenerImpl() {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -224,14 +226,10 @@ class CartFragment : Fragment(),
         }
 
         binding.payEfab.setOnClickListener {
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.confirm_payment_title)
-                .setMessage(R.string.confirm_payment_message)
-                .setPositiveButton(R.string.ok) { _, _ ->
-                    viewModel.payForOrder()
-                }
-                .setNegativeButton(R.string.cancel) { _, _ -> }
-                .show()
+            WaiterPasswordDialogFragment().show(
+                childFragmentManager,
+                WaiterPasswordDialogFragment.TAG
+            )
         }
     }
 
@@ -258,5 +256,9 @@ class CartFragment : Fragment(),
         }
 
         viewModel.updateQuantityInCart(position, quantity)
+    }
+
+    override fun onWaiterPasswordCorrect() {
+        viewModel.payForOrder()
     }
 }

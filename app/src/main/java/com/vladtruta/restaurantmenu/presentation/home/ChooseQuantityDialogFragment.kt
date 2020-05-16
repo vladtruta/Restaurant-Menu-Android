@@ -24,7 +24,7 @@ class ChooseQuantityDialogFragment : DialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        listener = context as? ChooseQuantityListener ?: parentFragment as? ChooseQuantityListener
+        listener = parentFragment as? ChooseQuantityListener ?: context as? ChooseQuantityListener
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

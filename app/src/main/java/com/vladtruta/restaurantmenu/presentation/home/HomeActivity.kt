@@ -14,10 +14,11 @@ import com.vladtruta.restaurantmenu.databinding.NavigationHeaderBinding
 import com.vladtruta.restaurantmenu.presentation.home.adapter.HomeFragmentPagerAdapter
 import com.vladtruta.restaurantmenu.presentation.home.adapter.HomeFragmentPagerAdapter.Companion.HOME_TABS
 import com.vladtruta.restaurantmenu.presentation.settings.SettingsActivity
+import com.vladtruta.restaurantmenu.presentation.settings.WaiterPasswordDialogFragment
 import com.vladtruta.restaurantmenu.utils.SessionUtils
 import com.vladtruta.restaurantmenu.widgets.OnTabSelectedListenerImpl
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), WaiterPasswordDialogFragment.WaiterPasswordListener {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navigationHeaderBinding: NavigationHeaderBinding
@@ -70,8 +71,7 @@ class HomeActivity : AppCompatActivity() {
         binding.homeNv.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_settings -> {
-                    val intent = Intent(this, SettingsActivity::class.java)
-                    startActivity(intent)
+                    WaiterPasswordDialogFragment().show(supportFragmentManager, WaiterPasswordDialogFragment.TAG)
                     true
                 }
                 else -> {
@@ -106,5 +106,10 @@ class HomeActivity : AppCompatActivity() {
                 binding.cartEfab.hide()
             }
         }
+    }
+
+    override fun onWaiterPasswordCorrect() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
     }
 }

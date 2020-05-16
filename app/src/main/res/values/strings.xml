@@ -41,4 +41,8 @@
     <string name="camera_permission_rationale">The app needs camera permission in order to scan for QR codes.</string>
     <string name="qr_code_instructions">Position your QR code inside the camera\'s frame</string>
     <string name="add_customer_success">Added %1$s successfully!</string>
+    <string name="enter_waiter_password">Enter waiter password</string>
+    <string name="waiter_password_incorrect">Incorrect waiter password</string>
+    <string name="call_the_waiter_to_proceed">Call the waiter to proceed.</string>
+    <string name="password_required">Password required</string>
 </resources>
