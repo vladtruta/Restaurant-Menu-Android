@@ -1,6 +1,7 @@
 package com.vladtruta.restaurantmenu.presentation.home.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -59,6 +60,13 @@ class CartOrderedAdapter(private val listener: CartOrderedListener) :
                     R.string.price_dollars,
                     orderedItem.cartItem.menuCourse.price * orderedItem.cartItem.quantity
                 )
+
+            orderedItem.payingCustomer?.let {
+                binding.payingCustomerTv.text = it.fullName
+                binding.payingCustomerTv.visibility = View.VISIBLE
+            } ?: run {
+                binding.payingCustomerTv.visibility = View.GONE
+            }
         }
     }
 
@@ -67,7 +75,7 @@ class CartOrderedAdapter(private val listener: CartOrderedListener) :
     }
 }
 
-private class CardOrderedDiffCallback() : DiffUtil.ItemCallback<OrderedItem>() {
+private class CardOrderedDiffCallback : DiffUtil.ItemCallback<OrderedItem>() {
     override fun areItemsTheSame(oldItem: OrderedItem, newItem: OrderedItem): Boolean {
         return oldItem.id == newItem.id
     }

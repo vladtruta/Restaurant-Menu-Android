@@ -12,12 +12,28 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/course_iv"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            android:layout_height="150dp">
+
+            <ImageView
+                android:id="@+id/course_iv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <TextView
+                android:id="@+id/paying_customer_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black_50"
+                android:gravity="center"
+                android:textAppearance="?attr/textAppearanceHeadline4"
+                android:textColor="@android:color/white"
+                tools:text="Paying Customer" />
+
+        </FrameLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/name_tv"
@@ -38,7 +54,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/quantity_tv"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_weight="1"
                 android:background="?attr/colorSecondaryVariant"
                 android:gravity="center"
@@ -52,7 +68,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/price_tv"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_weight="1"
                 android:background="?attr/colorPrimaryVariant"
                 android:gravity="center"

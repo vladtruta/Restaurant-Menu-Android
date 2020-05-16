@@ -12,7 +12,7 @@ data class OrderedItem(
     @Embedded(prefix = "cartItem_")
     val cartItem: CartItem,
     @Embedded(prefix = "payingCustomer_")
-    val payingCustomer: Customer? = null,
+    var payingCustomer: Customer? = null,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 ) : Parcelable

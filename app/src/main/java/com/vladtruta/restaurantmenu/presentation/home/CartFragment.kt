@@ -3,6 +3,7 @@ package com.vladtruta.restaurantmenu.presentation.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
@@ -22,6 +23,7 @@ import com.vladtruta.restaurantmenu.presentation.home.adapter.CartOrderedAdapter
 import com.vladtruta.restaurantmenu.presentation.home.adapter.CartPendingAdapter
 import com.vladtruta.restaurantmenu.presentation.qr.QrScanActivity
 import com.vladtruta.restaurantmenu.utils.UIUtils
+import com.vladtruta.restaurantmenu.widgets.OnItemSelectedListenerImpl
 
 class CartFragment : Fragment(),
     CartPendingAdapter.CartPendingListener,
@@ -67,19 +69,29 @@ class CartFragment : Fragment(),
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         customersView.adapter = adapter
 
+        customersView.onItemSelectedListener = object: OnItemSelectedListenerImpl() {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedCustomerId = parent?.getItemIdAtPosition(position) ?: 0
+                viewModel.selectedCustomerId = selectedCustomerId.toInt()
+            }
+        }
+
         val scanQrCodeItem = menu.findItem(R.id.menu_qr_scan)
 
-        splitPayView.isChecked = customerNames.isNotEmpty()
-        customersItem.isEnabled = customerNames.isNotEmpty()
-        customersItem.isVisible = customerNames.isNotEmpty()
-        scanQrCodeItem.isEnabled = customerNames.isNotEmpty()
-        scanQrCodeItem.isVisible = customerNames.isNotEmpty()
+        val isSplitPay = viewModel.splitPayEnabled.value ?: false
+        splitPayView.isChecked = isSplitPay
+        scanQrCodeItem.isEnabled = isSplitPay
+        scanQrCodeItem.isVisible = isSplitPay
+        customersItem.isEnabled = isSplitPay && customerNames.isNotEmpty()
+        customersItem.isVisible = isSplitPay && customerNames.isNotEmpty()
 
         splitPayView.setOnCheckedChangeListener { _, isChecked ->
-            customersItem.isEnabled = isChecked && customerNames.isNotEmpty()
-            customersItem.isVisible = isChecked && customerNames.isNotEmpty()
-            scanQrCodeItem.isEnabled = isChecked
-            scanQrCodeItem.isVisible = isChecked
+            viewModel.setSplitPayEnabled(isChecked)
         }
     }
 
@@ -171,6 +183,10 @@ class CartFragment : Fragment(),
         viewModel.customers.observe(viewLifecycleOwner, Observer {
             activity?.invalidateOptionsMenu()
         })
+
+        viewModel.splitPayEnabled.observe(viewLifecycleOwner, Observer {
+            activity?.invalidateOptionsMenu()
+        })
     }
 
     private fun initActions() {
@@ -225,7 +241,10 @@ class CartFragment : Fragment(),
     }
 
     override fun onCartOrderedItemClicked(orderedItem: OrderedItem) {
-
+        if (viewModel.splitPayEnabled.value == true && !viewModel.customers.value.isNullOrEmpty()) {
+            val customer = viewModel.customers.value!![viewModel.selectedCustomerId]
+            viewModel.updateCustomerOfOrderedItem(orderedItem, customer)
+        }
     }
 
     override fun onQuantityChosen(quantity: Int) {

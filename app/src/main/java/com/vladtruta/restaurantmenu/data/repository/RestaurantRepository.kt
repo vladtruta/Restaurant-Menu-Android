@@ -105,7 +105,11 @@ object RestaurantRepository {
         return restaurantDao.getOrderedItemsTotalPrice()
     }
 
-    suspend fun insertOrUpdateOrderedItems(cartItems: List<CartItem>) {
+    suspend fun insertOrderedItem(orderedItem: OrderedItem) {
+        restaurantDao.insertOrderedItem(orderedItem)
+    }
+
+    suspend fun insertOrAddToOrderedItems(cartItems: List<CartItem>) {
         withContext(Dispatchers.Default) {
             cartItems.forEach { cartItem ->
                 val orderedItem = restaurantDao.getOrderedItemByMenuCourseId(cartItem.menuCourse.id)
@@ -116,6 +120,10 @@ object RestaurantRepository {
                 }
             }
         }
+    }
+
+    suspend fun updateCustomerOfOrderedItem(orderedItem: OrderedItem, customer: Customer?) {
+        restaurantDao.updateOrderedItem(orderedItem.apply { this.payingCustomer = customer })
     }
 
     suspend fun clearOrderedItems() {
