@@ -57,6 +57,9 @@ interface RestaurantDao {
     @Query("SELECT * FROM orders")
     fun getAllOrderedItems(): LiveData<List<OrderedItem>>
 
+    @Query("SELECT * FROM orders")
+    suspend fun getAllOrderedItemsSuspend(): List<OrderedItem>
+
     @Query("SELECT * FROM orders WHERE id = :id")
     suspend fun getOrderedItemById(id: Int): OrderedItem?
 

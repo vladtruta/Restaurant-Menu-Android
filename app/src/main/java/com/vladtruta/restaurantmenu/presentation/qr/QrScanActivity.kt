@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -65,6 +66,15 @@ class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks 
 
         initObservers()
         tryStartCamera()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

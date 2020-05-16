@@ -11,6 +11,7 @@ import com.vladtruta.restaurantmenu.data.repository.RestaurantRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CartViewModel : ViewModel() {
 
@@ -63,19 +64,22 @@ class CartViewModel : ViewModel() {
     }
 
     fun setSplitPayEnabled(enabled: Boolean) {
-        _splitPayEnabled.value = enabled
-        updateOrderedItemsLayout()
+        viewModelScope.launch {
+            _splitPayEnabled.value = enabled
+            updateOrderedItemsLayout()
+        }
     }
 
-    private fun updateOrderedItemsLayout() {
-        viewModelScope.launch(Dispatchers.Default) {
-            val orderedItems = orderedItems.value ?: return@launch
+    private suspend fun updateOrderedItemsLayout() {
+        withContext(Dispatchers.Default) {
+            val orderedItems = RestaurantRepository.getAllOrderedItemsSuspend()
             RestaurantRepository.clearOrderedItems()
 
             if (_splitPayEnabled.value == true) {
                 orderedItems.forEach { orderedItem ->
                     repeat(orderedItem.cartItem.quantity) {
-                        val singleItem = OrderedItem(orderedItem.cartItem.apply { this.quantity = 1 })
+                        val singleItem =
+                            OrderedItem(orderedItem.cartItem.apply { this.quantity = 1 })
                         RestaurantRepository.insertOrderedItem(singleItem)
                     }
                 }
@@ -85,6 +89,7 @@ class CartViewModel : ViewModel() {
             }
         }
     }
+
 
     fun updateCustomerOfOrderedItem(id: Int, customer: Customer?) {
         viewModelScope.launch(messageExceptionHandler) {

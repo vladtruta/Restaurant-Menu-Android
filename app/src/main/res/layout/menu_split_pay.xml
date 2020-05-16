@@ -5,4 +5,4 @@
     android:layout_height="wrap_content"
     android:text="@string/split_pay"
     android:textAllCaps="true"
-    app:switchPadding="16dp" />
+    app:switchPadding="8dp" />

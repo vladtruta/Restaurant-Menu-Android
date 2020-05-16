@@ -101,6 +101,10 @@ object RestaurantRepository {
         return restaurantDao.getAllOrderedItems()
     }
 
+    suspend fun getAllOrderedItemsSuspend(): List<OrderedItem> {
+        return restaurantDao.getAllOrderedItemsSuspend()
+    }
+
     suspend fun getOrderedItemById(id: Int): OrderedItem {
         return restaurantDao.getOrderedItemById(id)
             ?: throw Exception("Could not find order with id $id")
