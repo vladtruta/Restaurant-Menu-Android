@@ -86,9 +86,9 @@ class CartViewModel : ViewModel() {
         }
     }
 
-    fun updateCustomerOfOrderedItem(orderedItem: OrderedItem, customer: Customer) {
-        viewModelScope.launch {
-            RestaurantRepository.updateCustomerOfOrderedItem(orderedItem, customer)
+    fun updateCustomerOfOrderedItem(id: Int, customer: Customer?) {
+        viewModelScope.launch(messageExceptionHandler) {
+            RestaurantRepository.updateCustomerOfOrderedItem(id, customer)
         }
     }
 }

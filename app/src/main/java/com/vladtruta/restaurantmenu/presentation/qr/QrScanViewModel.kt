@@ -23,7 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class QrScanViewModel : ViewModel() {
-    private val errorMessageExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    private val messageExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         _errorMessage.postValue(throwable.message)
     }
 
@@ -67,7 +67,7 @@ class QrScanViewModel : ViewModel() {
     }
 
     private fun processScannedBarcodes(barcodes: List<FirebaseVisionBarcode>) {
-        viewModelScope.launch(Dispatchers.Default + errorMessageExceptionHandler) {
+        viewModelScope.launch(Dispatchers.Default + messageExceptionHandler) {
             barcodes.lastOrNull()?.let {
                 try {
                     val converted = GsonHelper.instance.fromJson(

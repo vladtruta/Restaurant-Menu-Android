@@ -243,7 +243,11 @@ class CartFragment : Fragment(),
     override fun onCartOrderedItemClicked(orderedItem: OrderedItem) {
         if (viewModel.splitPayEnabled.value == true && !viewModel.customers.value.isNullOrEmpty()) {
             val customer = viewModel.customers.value!![viewModel.selectedCustomerId]
-            viewModel.updateCustomerOfOrderedItem(orderedItem, customer)
+            if (orderedItem.payingCustomer == customer) {
+                viewModel.updateCustomerOfOrderedItem(orderedItem.id, null)
+            } else {
+                viewModel.updateCustomerOfOrderedItem(orderedItem.id, customer)
+            }
         }
     }
 

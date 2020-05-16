@@ -101,6 +101,11 @@ object RestaurantRepository {
         return restaurantDao.getAllOrderedItems()
     }
 
+    suspend fun getOrderedItemById(id: Int): OrderedItem {
+        return restaurantDao.getOrderedItemById(id)
+            ?: throw Exception("Could not find order with id $id")
+    }
+
     fun getOrderedItemsTotalPrice(): LiveData<Int> {
         return restaurantDao.getOrderedItemsTotalPrice()
     }
@@ -122,10 +127,11 @@ object RestaurantRepository {
         }
     }
 
-    suspend fun updateCustomerOfOrderedItem(orderedItem: OrderedItem, customer: Customer?) {
+    suspend fun updateCustomerOfOrderedItem(id: Int, customer: Customer?) {
+        val orderedItem = getOrderedItemById(id)
         restaurantDao.updateOrderedItem(orderedItem.apply { this.payingCustomer = customer })
     }
-
+    
     suspend fun clearOrderedItems() {
         restaurantDao.clearOrderedItems()
     }
