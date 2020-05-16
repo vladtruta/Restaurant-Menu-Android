@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
-import com.vladtruta.restaurantmenu.data.model.local.Customer
 import com.vladtruta.restaurantmenu.data.repository.RestaurantRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -50,12 +49,6 @@ class CartViewModel : ViewModel() {
     fun payForOrder() {
         viewModelScope.launch {
             RestaurantRepository.clearOrderedItems()
-        }
-    }
-
-    fun insertCustomer(customer: Customer) {
-        viewModelScope.launch {
-            RestaurantRepository.insertCustomer(customer)
         }
     }
 }

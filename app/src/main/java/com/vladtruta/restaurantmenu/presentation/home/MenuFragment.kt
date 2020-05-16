@@ -60,6 +60,10 @@ class MenuFragment : Fragment(),
     private fun initObservers() {
         viewModel.categories.observe(viewLifecycleOwner, Observer {
             categoriesAdapter.submitList(it) {
+                if (categoriesAdapter.itemCount == 0) {
+                    return@submitList
+                }
+
                 val initialCategory = categoriesAdapter.currentList[categoriesAdapter.checkedPosition]
                 onCategoryClicked(initialCategory)
             }

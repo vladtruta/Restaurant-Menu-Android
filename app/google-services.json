@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "509902570708",
+    "firebase_url": "https://restaurantmenu-f4c38.firebaseio.com",
+    "project_id": "restaurantmenu-f4c38",
+    "storage_bucket": "restaurantmenu-f4c38.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509902570708:android:ea40ff75fa584808e36741",
+        "android_client_info": {
+          "package_name": "com.vladtruta.restaurantmenu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509902570708-h8ts7vah5t2m0lni6fsuuimujf4ukbqs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxAfmC8_iSMH_YFoy6Jok13fk_6IwWFhk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509902570708-h8ts7vah5t2m0lni6fsuuimujf4ukbqs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

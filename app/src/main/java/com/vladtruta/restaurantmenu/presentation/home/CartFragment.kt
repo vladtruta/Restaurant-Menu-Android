@@ -1,5 +1,6 @@
 package com.vladtruta.restaurantmenu.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
@@ -19,6 +20,7 @@ import com.vladtruta.restaurantmenu.data.model.local.OrderedItem
 import com.vladtruta.restaurantmenu.databinding.FragmentCartBinding
 import com.vladtruta.restaurantmenu.presentation.home.adapter.CartOrderedAdapter
 import com.vladtruta.restaurantmenu.presentation.home.adapter.CartPendingAdapter
+import com.vladtruta.restaurantmenu.presentation.qr.QrScanActivity
 import com.vladtruta.restaurantmenu.utils.UIUtils
 
 class CartFragment : Fragment(),
@@ -85,7 +87,8 @@ class CartFragment : Fragment(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_qr_scan -> {
-                // Open QR Scan screen
+                val intent = Intent(requireContext(), QrScanActivity::class.java)
+                startActivity(intent)
                 true
             }
             else -> {

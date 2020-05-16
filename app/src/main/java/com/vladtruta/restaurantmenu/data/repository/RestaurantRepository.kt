@@ -122,8 +122,8 @@ object RestaurantRepository {
         restaurantDao.clearOrderedItems()
     }
 
-    suspend fun insertCustomer(customer: Customer) {
-        restaurantDao.insertCustomer(customer)
+    suspend fun insertCustomers(vararg customers: Customer) {
+        restaurantDao.insertCustomer(*customers)
     }
 
     fun getAllCustomers(): LiveData<List<Customer>> {

@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.vladtruta.restaurantmenu">
 
+    <uses-feature android:name="android.hardware.camera.any" />
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".utils.RestaurantApp"
@@ -23,22 +26,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".presentation.home.HomeActivity"
             android:launchMode="singleTask" />
-
         <activity
             android:name=".presentation.settings.SettingsActivity"
             android:label="@string/settings"
             android:parentActivityName=".presentation.home.HomeActivity"
             android:theme="@style/SettingsTheme">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.home.HomeActivity" />
-
         </activity>
+
+        <activity android:name=".presentation.qr.QrScanActivity"/>
+
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="barcode" />
     </application>
 
 </manifest>

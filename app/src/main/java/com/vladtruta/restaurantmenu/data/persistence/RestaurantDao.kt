@@ -1,10 +1,7 @@
 package com.vladtruta.restaurantmenu.data.persistence
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.vladtruta.restaurantmenu.data.model.local.*
 
 @Dao
@@ -72,8 +69,8 @@ interface RestaurantDao {
     @Query("DELETE FROM orders")
     suspend fun clearOrderedItems()
 
-    @Insert
-    suspend fun insertCustomer(customer: Customer)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCustomer(vararg customers: Customer)
 
     @Query("SELECT * FROM customers")
     fun getAllCustomers(): LiveData<List<Customer>>
