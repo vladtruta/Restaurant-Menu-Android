@@ -5,10 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.vladtruta.restaurantmenu.data.model.local.CartItem
-import com.vladtruta.restaurantmenu.data.model.local.Category
-import com.vladtruta.restaurantmenu.data.model.local.MenuCourse
-import com.vladtruta.restaurantmenu.data.model.local.OrderedItem
+import com.vladtruta.restaurantmenu.data.model.local.*
 
 @Dao
 interface RestaurantDao {
@@ -74,4 +71,13 @@ interface RestaurantDao {
 
     @Query("DELETE FROM orders")
     suspend fun clearOrderedItems()
+
+    @Insert
+    suspend fun insertCustomer(customer: Customer)
+
+    @Query("SELECT * FROM customers")
+    fun getAllCustomers(): LiveData<List<Customer>>
+
+    @Query("DELETE FROM customers")
+    suspend fun clearCustomers()
 }

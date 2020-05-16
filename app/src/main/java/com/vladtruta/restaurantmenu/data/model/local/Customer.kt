@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "customers")
 data class Customer(
     val fullName: String,
-    val tableNumber: Int,
+    val tableName: String,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 ) : Parcelable

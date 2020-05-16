@@ -1,10 +1,7 @@
 package com.vladtruta.restaurantmenu.data.repository
 
 import androidx.lifecycle.LiveData
-import com.vladtruta.restaurantmenu.data.model.local.CartItem
-import com.vladtruta.restaurantmenu.data.model.local.Category
-import com.vladtruta.restaurantmenu.data.model.local.MenuCourse
-import com.vladtruta.restaurantmenu.data.model.local.OrderedItem
+import com.vladtruta.restaurantmenu.data.model.local.*
 import com.vladtruta.restaurantmenu.data.persistence.getDatabase
 import com.vladtruta.restaurantmenu.data.webservice.getNetwork
 import com.vladtruta.restaurantmenu.utils.RestaurantApp
@@ -48,6 +45,7 @@ object RestaurantRepository {
         restaurantDao.clearCategories()
         restaurantDao.clearCart()
         restaurantDao.clearOrderedItems()
+        restaurantDao.clearCustomers()
     }
 
     fun getAllCategories(): LiveData<List<Category>> {
@@ -123,5 +121,14 @@ object RestaurantRepository {
     suspend fun clearOrderedItems() {
         restaurantDao.clearOrderedItems()
     }
+
+    suspend fun insertCustomer(customer: Customer) {
+        restaurantDao.insertCustomer(customer)
+    }
+
+    fun getAllCustomers(): LiveData<List<Customer>> {
+        return restaurantDao.getAllCustomers()
+    }
+
     ///endregion
 }

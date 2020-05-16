@@ -6,7 +6,7 @@
     android:background="?android:attr/selectableItemBackground"
     android:orientation="vertical">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/category_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

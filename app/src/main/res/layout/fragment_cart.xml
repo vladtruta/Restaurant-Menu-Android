@@ -23,7 +23,7 @@
                 android:background="?attr/colorSecondary"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -32,7 +32,7 @@
                     android:textAlignment="center"
                     android:textAppearance="?attr/textAppearanceHeadline3" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/pending_total_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 android:layout_height="1dp"
                 android:background="?attr/dividerHorizontal" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/pending_empty_tv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -90,7 +90,7 @@
                 android:background="?attr/colorSecondaryVariant"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -99,7 +99,7 @@
                     android:textAlignment="center"
                     android:textAppearance="?attr/textAppearanceHeadline3" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/ordered_total_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                 android:layout_height="1dp"
                 android:background="?attr/dividerHorizontal" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/ordered_empty_tv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

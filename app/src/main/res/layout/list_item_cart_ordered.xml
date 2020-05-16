@@ -19,7 +19,7 @@
             android:scaleType="centerCrop"
             tools:src="@tools:sample/backgrounds/scenic" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/name_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/quantity_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                 app:autoSizeTextType="uniform"
                 tools:text="x4" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/price_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

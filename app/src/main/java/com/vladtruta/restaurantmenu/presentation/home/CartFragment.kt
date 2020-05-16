@@ -1,9 +1,9 @@
 package com.vladtruta.restaurantmenu.presentation.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.vladtruta.restaurantmenu.R
 import com.vladtruta.restaurantmenu.data.model.local.CartItem
 import com.vladtruta.restaurantmenu.data.model.local.OrderedItem
@@ -31,12 +32,66 @@ class CartFragment : Fragment(),
     private lateinit var cartPendingAdapter: CartPendingAdapter
     private lateinit var cartOrderedAdapter: CartOrderedAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCartBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        inflater.inflate(R.menu.home_items, menu)
+
+        val splitPayItem = menu.findItem(R.id.menu_split_pay)
+        val splitPayView = splitPayItem?.actionView as SwitchMaterial
+
+        val customersItem = menu.findItem(R.id.menu_customers)
+        val customersView = customersItem?.actionView as Spinner
+
+        val scanQrCodeItem = menu.findItem(R.id.menu_qr_scan)
+
+        customersItem.isEnabled = splitPayView.isChecked && customersView.adapter?.count ?: 0 > 0
+        customersItem.isVisible = splitPayView.isChecked && customersView.adapter?.count ?: 0 > 0
+        scanQrCodeItem.isEnabled = splitPayView.isChecked
+        scanQrCodeItem.isVisible = splitPayView.isChecked
+
+        splitPayView.setOnCheckedChangeListener { _, isChecked ->
+            customersItem.isEnabled = isChecked && customersView.adapter?.count ?: 0 > 0
+            customersItem.isVisible = isChecked && customersView.adapter?.count ?: 0 > 0
+            scanQrCodeItem.isEnabled = isChecked
+            scanQrCodeItem.isVisible = isChecked
+        }
+
+        viewModel.customers.observe(viewLifecycleOwner, Observer { customers ->
+            customers ?: return@Observer
+
+            val adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                customers.map { it.fullName })
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            customersView.adapter = adapter
+        })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_qr_scan -> {
+                // Open QR Scan screen
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

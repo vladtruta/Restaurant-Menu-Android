@@ -8,14 +8,14 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/table_name"
         android:textAppearance="?attr/textAppearanceHeadline5" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/table_name_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

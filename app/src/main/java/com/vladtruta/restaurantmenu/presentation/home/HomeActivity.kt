@@ -20,6 +20,7 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navigationHeaderBinding: NavigationHeaderBinding
+
     private val viewModel by viewModels<HomeViewModel>()
 
     private lateinit var homeFragmentPagerAdapter: FragmentPagerAdapter
@@ -29,6 +30,8 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         navigationHeaderBinding = NavigationHeaderBinding.bind(binding.homeNv.getHeaderView(0))
         setContentView(binding.root)
+
+        setSupportActionBar(findViewById(R.id.home_mtb))
 
         initViews()
         initObservers()
@@ -59,6 +62,27 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initActions() {
+//        binding.homeMtb.setNavigationOnClickListener {
+//            binding.homeDl.openDrawer(GravityCompat.START)
+//        }
+
+//        binding.homeMtb.setOnMenuItemClickListener {
+//            when (it.itemId) {
+//                R.id.menu_split_pay -> {
+//                    true
+//                }
+//                R.id.menu_customers -> {
+//                    true
+//                }
+//                R.id.menu_qr_scan -> {
+//                    true
+//                }
+//                else -> {
+//                    false
+//                }
+//            }
+//        }
+
         binding.homeNv.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_settings -> {
