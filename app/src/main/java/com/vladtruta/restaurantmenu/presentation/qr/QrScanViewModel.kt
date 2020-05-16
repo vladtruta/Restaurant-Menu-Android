@@ -23,7 +23,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class QrScanViewModel : ViewModel() {
-
     private val errorMessageExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         _errorMessage.postValue(throwable.message)
     }
