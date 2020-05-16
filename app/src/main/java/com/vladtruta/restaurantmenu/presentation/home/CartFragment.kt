@@ -58,30 +58,29 @@ class CartFragment : Fragment(),
         val customersItem = menu.findItem(R.id.menu_customers)
         val customersView = customersItem?.actionView as Spinner
 
+        val customerNames = viewModel.customers.value?.map { it.fullName } ?: emptyList()
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            customerNames
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        customersView.adapter = adapter
+
         val scanQrCodeItem = menu.findItem(R.id.menu_qr_scan)
 
-        customersItem.isEnabled = splitPayView.isChecked && customersView.adapter?.count ?: 0 > 0
-        customersItem.isVisible = splitPayView.isChecked && customersView.adapter?.count ?: 0 > 0
-        scanQrCodeItem.isEnabled = splitPayView.isChecked
-        scanQrCodeItem.isVisible = splitPayView.isChecked
+        splitPayView.isChecked = customerNames.isNotEmpty()
+        customersItem.isEnabled = customerNames.isNotEmpty()
+        customersItem.isVisible = customerNames.isNotEmpty()
+        scanQrCodeItem.isEnabled = customerNames.isNotEmpty()
+        scanQrCodeItem.isVisible = customerNames.isNotEmpty()
 
         splitPayView.setOnCheckedChangeListener { _, isChecked ->
-            customersItem.isEnabled = isChecked && customersView.adapter?.count ?: 0 > 0
-            customersItem.isVisible = isChecked && customersView.adapter?.count ?: 0 > 0
+            customersItem.isEnabled = isChecked && customerNames.isNotEmpty()
+            customersItem.isVisible = isChecked && customerNames.isNotEmpty()
             scanQrCodeItem.isEnabled = isChecked
             scanQrCodeItem.isVisible = isChecked
         }
-
-        viewModel.customers.observe(viewLifecycleOwner, Observer { customers ->
-            customers ?: return@Observer
-
-            val adapter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_item,
-                customers.map { it.fullName })
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            customersView.adapter = adapter
-        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -167,6 +166,10 @@ class CartFragment : Fragment(),
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
             val errorMessage = UIUtils.getString(R.string.error_message)
             Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_SHORT).show()
+        })
+
+        viewModel.customers.observe(viewLifecycleOwner, Observer {
+            activity?.invalidateOptionsMenu()
         })
     }
 

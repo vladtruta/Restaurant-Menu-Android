@@ -3,6 +3,7 @@ package com.vladtruta.restaurantmenu.presentation.qr
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -14,34 +15,35 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode
 import com.vladtruta.restaurantmenu.R
-import com.vladtruta.restaurantmenu.databinding.ActivityQrScanBinding
 import com.vladtruta.restaurantmenu.utils.UIUtils
 import kotlinx.android.synthetic.main.activity_qr_scan.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 
-class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
-    QrCodeAnalyzer.QrCodesDetectedListener {
+class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     companion object {
         private const val TAG = "QrScanActivity"
+
+        private const val TOAST_HANDLER_DELAY = 300L
 
         private const val REQ_CODE_CAMERA_PERMISSION = 283
         private val cameraPermissions = arrayOf(Manifest.permission.CAMERA)
     }
 
-    private lateinit var binding: ActivityQrScanBinding
     private val viewModel by viewModels<QrScanViewModel>()
 
     private var preview: Preview? = null
     private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
 
-    private val cameraExecutor = Executors.newSingleThreadExecutor()
+    private val toastHandler = Handler()
+
+    private lateinit var cameraExecutor: Executor
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -54,16 +56,40 @@ class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityQrScanBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_qr_scan)
+
+        setSupportActionBar(qr_scan_mtb)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        cameraExecutor = Executors.newSingleThreadExecutor()
 
         initObservers()
         tryStartCamera()
     }
 
+    override fun onDestroy() {
+        toastHandler.removeCallbacksAndMessages(null)
+
+        super.onDestroy()
+    }
+
     private fun initObservers() {
-        viewModel.statusMessage.observe(this, Observer {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        viewModel.errorMessage.observe(this, Observer {
+            toastHandler.removeCallbacksAndMessages(null)
+            toastHandler.postDelayed({
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }, TOAST_HANDLER_DELAY)
+
+            finish()
+        })
+
+        viewModel.customerAddedSuccessMessage.observe(this, Observer {
+            toastHandler.removeCallbacksAndMessages(null)
+            toastHandler.postDelayed({
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }, TOAST_HANDLER_DELAY)
+
+            finish()
         })
     }
 
@@ -77,8 +103,7 @@ class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
                 preview = Preview.Builder().build()
                 imageAnalyzer = ImageAnalysis.Builder().build().also {
-                    val analyzer = QrCodeAnalyzer(this)
-                    it.setAnalyzer(cameraExecutor, analyzer)
+                    it.setAnalyzer(cameraExecutor, viewModel.qrCodeAnalyzer)
                 }
 
                 val cameraSelector = CameraSelector.Builder()
@@ -101,17 +126,6 @@ class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         } else {
             requestCameraPermissions()
         }
-    }
-
-    override fun onQrCodesDetectSuccess(qrCodes: List<FirebaseVisionBarcode>) {
-        viewModel.insertCustomers(qrCodes)
-    }
-
-    override fun onQrCodesDetectFailure(error: String?) {
-        if (error.isNullOrEmpty()) {
-            return
-        }
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
 
     private fun hasCameraPermissions(): Boolean {

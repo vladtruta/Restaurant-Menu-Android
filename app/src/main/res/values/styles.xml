@@ -26,6 +26,10 @@
         <item name="android:windowTranslucentStatus">false</item>
     </style>
 
+    <style name="ScanQrCodeTheme" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">false</item>
+    </style>
+
     <style name="NumberPickerBigText">
         <item name="android:textSize">24sp</item>
     </style>

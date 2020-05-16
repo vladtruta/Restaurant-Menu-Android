@@ -70,7 +70,7 @@ interface RestaurantDao {
     suspend fun clearOrderedItems()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCustomer(vararg customers: Customer)
+    suspend fun insertCustomer(customer: Customer)
 
     @Query("SELECT * FROM customers")
     fun getAllCustomers(): LiveData<List<Customer>>

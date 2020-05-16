@@ -8,7 +8,7 @@
     <string name="choose_quantity">Choose quantity</string>
     <string name="add_to_cart_success">Added %1$d %2$s to cart.</string>
     <string name="undo">Undo</string>
-    <string name="error_message">An error has occured, please try again.</string>
+    <string name="error_message">An error has occurred, please try again.</string>
     <string name="retry">Retry</string>
     <string name="cart">Cart</string>
     <string name="menu">Menu</string>
@@ -39,4 +39,6 @@
     <string name="customers">Customers</string>
     <string name="scan_qr_code">Scan QR Code</string>
     <string name="camera_permission_rationale">The app needs camera permission in order to scan for QR codes.</string>
+    <string name="qr_code_instructions">Position your QR code inside the camera\'s frame</string>
+    <string name="add_customer_success">Added %1$s successfully!</string>
 </resources>

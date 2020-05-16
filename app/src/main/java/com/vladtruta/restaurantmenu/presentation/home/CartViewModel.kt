@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class CartViewModel : ViewModel() {
 
     private val messageExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        _errorMessage.value = throwable.message
+        _errorMessage.postValue(throwable.message)
     }
 
     val cartItems = RestaurantRepository.getAllCartItems()

@@ -3,6 +3,7 @@ package com.vladtruta.restaurantmenu.presentation.settings
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.vladtruta.restaurantmenu.R
+import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -10,7 +11,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        setSupportActionBar(findViewById(R.id.settings_mtb))
+        setSupportActionBar(settings_mtb)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }

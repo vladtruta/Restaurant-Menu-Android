@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
@@ -62,26 +63,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initActions() {
-//        binding.homeMtb.setNavigationOnClickListener {
-//            binding.homeDl.openDrawer(GravityCompat.START)
-//        }
-
-//        binding.homeMtb.setOnMenuItemClickListener {
-//            when (it.itemId) {
-//                R.id.menu_split_pay -> {
-//                    true
-//                }
-//                R.id.menu_customers -> {
-//                    true
-//                }
-//                R.id.menu_qr_scan -> {
-//                    true
-//                }
-//                else -> {
-//                    false
-//                }
-//            }
-//        }
+        binding.homeMtb.setNavigationOnClickListener {
+            binding.homeDl.openDrawer(GravityCompat.START)
+        }
 
         binding.homeNv.setNavigationItemSelectedListener {
             when (it.itemId) {

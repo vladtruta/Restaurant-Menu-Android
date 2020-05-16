@@ -17,7 +17,7 @@ class CourseDetailsViewModel : ViewModel() {
     private val ignoredExceptionHandler = CoroutineExceptionHandler { _, _ -> }
 
     private val messageExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        _errorMessage.value = throwable.message
+        _errorMessage.postValue(throwable.message)
     }
 
     private val _errorMessage = MutableLiveData<String>()
