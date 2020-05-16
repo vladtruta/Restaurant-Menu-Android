@@ -43,7 +43,6 @@ object RestaurantRepository {
         restaurantDao.clearCart()
         restaurantDao.clearMenuCourses()
         restaurantDao.clearCategories()
-        restaurantDao.clearCart()
         restaurantDao.clearOrderedItems()
         restaurantDao.clearCustomers()
     }

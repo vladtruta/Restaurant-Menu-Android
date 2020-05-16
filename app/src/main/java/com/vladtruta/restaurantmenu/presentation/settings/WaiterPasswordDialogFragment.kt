@@ -3,6 +3,10 @@ package com.vladtruta.restaurantmenu.presentation.settings
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -31,16 +35,25 @@ class WaiterPasswordDialogFragment: DialogFragment() {
             .setTitle(R.string.password_required)
             .setMessage(R.string.call_the_waiter_to_proceed)
             .setPositiveButton(R.string.ok) { _, _ ->
-                val password = binding.waiterPasswordEt.text.toString()
-                if (password == SessionUtils.getWaiterPassword() || password == SessionUtils.getEmergencyPassword()) {
-                    listener?.onWaiterPasswordCorrect()
-                } else {
-                    Toast.makeText(requireContext(), R.string.waiter_password_incorrect, Toast.LENGTH_SHORT).show()
-                }
+                checkPasswordCorrect()
             }
             .setNegativeButton(R.string.cancel) { _, _ -> }
             .setView(binding.root)
             .create()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initActions()
     }
 
     override fun onStart() {
@@ -51,6 +64,26 @@ class WaiterPasswordDialogFragment: DialogFragment() {
     override fun onDetach() {
         listener = null
         super.onDetach()
+    }
+
+    private fun initActions() {
+        binding.waiterPasswordEt.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_GO) {
+                checkPasswordCorrect()
+                dismissAllowingStateLoss()
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+    }
+
+    private fun checkPasswordCorrect() {
+        val password = binding.waiterPasswordEt.text.toString()
+        if (password == SessionUtils.getWaiterPassword() || password == SessionUtils.getEmergencyPassword()) {
+            listener?.onWaiterPasswordCorrect()
+        } else {
+            Toast.makeText(requireContext(), R.string.waiter_password_incorrect, Toast.LENGTH_SHORT).show()
+        }
     }
 
     interface WaiterPasswordListener{
