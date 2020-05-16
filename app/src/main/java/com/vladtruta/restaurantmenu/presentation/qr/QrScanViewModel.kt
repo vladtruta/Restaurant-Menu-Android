@@ -34,9 +34,6 @@ class QrScanViewModel : ViewModel() {
     private val _customerAddedSuccessMessage = MutableLiveData<String>()
     val customerAddedSuccessMessage: LiveData<String> = _customerAddedSuccessMessage
 
-    private val _customer = MutableLiveData<Customer>()
-    val customer: LiveData<Customer> = _customer
-
     val qrCodeAnalyzer = object : ImageAnalysis.Analyzer {
         override fun analyze(imageProxy: ImageProxy) {
             @androidx.camera.core.ExperimentalGetImage
