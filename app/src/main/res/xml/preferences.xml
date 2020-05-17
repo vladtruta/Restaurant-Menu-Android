@@ -27,7 +27,7 @@
         app:key="reset_category"
         app:title="@string/reset">
 
-        <EditTextPreference
+        <Preference
             app:icon="@drawable/ic_reset"
             app:key="reset_device"
             app:title="@string/reset_device" />

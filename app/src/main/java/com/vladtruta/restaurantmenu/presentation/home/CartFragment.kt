@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -28,8 +29,10 @@ import com.vladtruta.restaurantmenu.widgets.OnItemSelectedListenerImpl
 
 class CartFragment : Fragment(),
     CartPendingAdapter.CartPendingListener,
-    ChooseQuantityDialogFragment.ChooseQuantityListener, CartOrderedAdapter.CartOrderedListener,
-    WaiterPasswordDialogFragment.WaiterPasswordListener {
+    ChooseQuantityDialogFragment.ChooseQuantityListener,
+    CartOrderedAdapter.CartOrderedListener,
+    WaiterPasswordDialogFragment.WaiterPasswordListener,
+    PaymentSummaryDialogFragment.PaymentSummaryListener {
 
     private lateinit var binding: FragmentCartBinding
     private val viewModel by viewModels<CartViewModel>()
@@ -178,8 +181,8 @@ class CartFragment : Fragment(),
         })
 
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-            val errorMessage = UIUtils.getString(R.string.error_message)
-            Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).setAnchorView(binding.payEfab)
+                .show()
         })
 
         viewModel.customers.observe(viewLifecycleOwner, Observer {
@@ -188,6 +191,32 @@ class CartFragment : Fragment(),
 
         viewModel.splitPayEnabled.observe(viewLifecycleOwner, Observer {
             activity?.invalidateOptionsMenu()
+        })
+
+        viewModel.payButtonEnabled.observe(viewLifecycleOwner, Observer {
+            binding.payEfab.isEnabled = it
+        })
+
+        viewModel.orderValid.observe(viewLifecycleOwner, Observer {
+            if (!it) {
+                return@Observer
+            }
+            WaiterPasswordDialogFragment().show(
+                childFragmentManager,
+                WaiterPasswordDialogFragment.TAG
+            )
+        })
+
+        viewModel.paymentSummary.observe(viewLifecycleOwner, Observer {
+            if (it.isNullOrEmpty()) {
+                return@Observer
+            }
+
+            binding.payEfab.isEnabled = true
+            PaymentSummaryDialogFragment.newInstance(it).show(
+                childFragmentManager,
+                PaymentSummaryDialogFragment.TAG
+            )
         })
     }
 
@@ -226,10 +255,7 @@ class CartFragment : Fragment(),
         }
 
         binding.payEfab.setOnClickListener {
-            WaiterPasswordDialogFragment().show(
-                childFragmentManager,
-                WaiterPasswordDialogFragment.TAG
-            )
+            viewModel.checkOrderValid()
         }
     }
 
@@ -259,6 +285,15 @@ class CartFragment : Fragment(),
     }
 
     override fun onWaiterPasswordCorrect() {
+        viewModel.updatePaymentSummary()
+    }
+
+    override fun onPaymentConfirmed() {
         viewModel.payForOrder()
+        Toast.makeText(
+            requireContext(),
+            UIUtils.getString(R.string.thank_you_for_order),
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

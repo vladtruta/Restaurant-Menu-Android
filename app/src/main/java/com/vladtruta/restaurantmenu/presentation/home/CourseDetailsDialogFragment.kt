@@ -72,8 +72,7 @@ class CourseDetailsDialogFragment : DialogFragment(),
 
     private fun initObservers() {
         viewModel.errorMessage.observe(this, Observer {
-            val errorMessage = UIUtils.getString(R.string.error_message)
-            Snackbar.make(binding.addToCardEfab, errorMessage, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.addToCardEfab, it, Snackbar.LENGTH_SHORT).show()
         })
     }
 

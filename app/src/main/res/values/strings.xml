@@ -45,4 +45,13 @@
     <string name="waiter_password_incorrect">Incorrect waiter password</string>
     <string name="call_the_waiter_to_proceed">Call the waiter to proceed.</string>
     <string name="password_required">Password required</string>
+    <string name="total">Total:</string>
+    <string name="cash">Cash</string>
+    <string name="card">Card</string>
+    <string name="order_summary">Order summary</string>
+    <string name="thank_you_for_order">Thank you for your order!</string>
+    <string name="everybody">Everybody</string>
+    <string name="error_some_products_not_assign">Please assign a customer to each item.</string>
+    <string name="error_customers_empty">Please add customers by scanning your given QR codes.</string>
+    <string name="payment_method">Pay:</string>
 </resources>

@@ -1,7 +1,9 @@
 package com.vladtruta.restaurantmenu.utils
 
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.vladtruta.restaurantmenu.presentation.splash.SplashActivity
 
 object SessionUtils {
     private const val KEY_TABLE_NAME = "table_name"
@@ -28,5 +30,18 @@ object SessionUtils {
 
     fun getEmergencyPassword(): String {
         return EMERGENCY_PASSWORD
+    }
+
+    fun getResetIntent(): Intent {
+        val launcherIntent =
+            RestaurantApp.instance.packageManager.getLaunchIntentForPackage(RestaurantApp.instance.packageName)
+                ?: Intent(RestaurantApp.instance, SplashActivity::class.java)
+
+        launcherIntent.apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        return launcherIntent
     }
 }

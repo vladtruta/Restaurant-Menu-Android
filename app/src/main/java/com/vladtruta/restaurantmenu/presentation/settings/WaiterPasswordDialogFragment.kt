@@ -70,6 +70,7 @@ class WaiterPasswordDialogFragment: DialogFragment() {
         binding.waiterPasswordEt.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 checkPasswordCorrect()
+                UIUtils.hideKeyboardFrom(binding.waiterPasswordEt)
                 dismissAllowingStateLoss()
                 return@setOnEditorActionListener true
             }

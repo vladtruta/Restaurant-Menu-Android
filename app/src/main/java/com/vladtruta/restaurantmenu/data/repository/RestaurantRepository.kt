@@ -147,5 +147,9 @@ object RestaurantRepository {
         return restaurantDao.getAllCustomers()
     }
 
+    suspend fun clearCustomers() {
+        return restaurantDao.clearCustomers()
+    }
+
     ///endregion
 }

@@ -1,12 +1,12 @@
 package com.vladtruta.restaurantmenu.presentation.settings
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.vladtruta.restaurantmenu.R
+import com.vladtruta.restaurantmenu.utils.SessionUtils
 
 class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -37,13 +37,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun initResetDevicePreference() {
         val resetDevicePreference = findPreference<Preference>("reset_device")
-        val intent =
-            requireContext().packageManager.getLaunchIntentForPackage(requireContext().packageName)
-                ?: return
-        intent.apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-        resetDevicePreference?.intent = intent
+        resetDevicePreference?.intent = SessionUtils.getResetIntent()
     }
 }
