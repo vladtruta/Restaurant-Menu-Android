@@ -79,7 +79,10 @@ class CartViewModel : ViewModel() {
                 orderedItems.forEach { orderedItem ->
                     repeat(orderedItem.cartItem.quantity) {
                         val singleItem =
-                            OrderedItem(orderedItem.cartItem.apply { this.quantity = 1 })
+                            OrderedItem(
+                                orderedItem.cartItem.apply { this.quantity = 1 },
+                                orderedItem.payingCustomer
+                            )
                         RestaurantRepository.insertOrderedItem(singleItem)
                     }
                 }
