@@ -8,7 +8,7 @@ import com.vladtruta.restaurantmenu.data.model.local.*
 
 @Database(
     entities = [Category::class, MenuCourse::class, CartItem::class, Customer::class, OrderedItem::class],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 abstract class RestaurantDatabase : RoomDatabase() {

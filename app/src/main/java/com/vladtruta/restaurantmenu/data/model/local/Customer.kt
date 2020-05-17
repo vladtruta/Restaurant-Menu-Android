@@ -8,12 +8,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "customers")
 data class Customer(
-    val fullName: String? = null,
-    val tableName: String? = null,
+    val fullName: String,
+    val tableName: String,
     @PrimaryKey(autoGenerate = false)
-    val id: Int? = 0
-) : Parcelable {
-    fun isValid(): Boolean {
-        return id != null && fullName != null && tableName != null
-    }
-}
+    val id: Int = 0
+) : Parcelable

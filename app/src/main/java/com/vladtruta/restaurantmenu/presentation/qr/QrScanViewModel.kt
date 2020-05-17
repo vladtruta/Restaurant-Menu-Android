@@ -13,7 +13,7 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata
 import com.google.gson.JsonSyntaxException
 import com.vladtruta.restaurantmenu.R
-import com.vladtruta.restaurantmenu.data.model.local.Customer
+import com.vladtruta.restaurantmenu.data.model.responses.CustomerResponse
 import com.vladtruta.restaurantmenu.data.repository.RestaurantRepository
 import com.vladtruta.restaurantmenu.utils.GsonHelper
 import com.vladtruta.restaurantmenu.utils.SessionUtils
@@ -70,19 +70,22 @@ class QrScanViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.Default + messageExceptionHandler) {
             barcodes.lastOrNull()?.let {
                 try {
-                    val converted = GsonHelper.instance.fromJson(
+                    val customerEntity = GsonHelper.instance.fromJson(
                         it.rawValue,
-                        Customer::class.java
-                    )
-                    if (!converted.isValid()) {
-                        throw Exception("This QR code does not represent a valid customer")
-                    }
-                    if (converted.tableName != SessionUtils.getTableName()) {
+                        CustomerResponse::class.java
+                    ).toCustomer() ?: throw Exception("This QR code does not represent a valid customer")
+
+                    if (customerEntity.tableName != SessionUtils.getTableName()) {
                         throw Exception("The customer does not belong to this table")
                     }
 
-                    RestaurantRepository.insertCustomer(converted)
-                    _customerAddedSuccessMessage.postValue(UIUtils.getString(R.string.add_customer_success, converted.fullName))
+                    RestaurantRepository.insertCustomer(customerEntity)
+                    _customerAddedSuccessMessage.postValue(
+                        UIUtils.getString(
+                            R.string.add_customer_success,
+                            customerEntity.fullName
+                        )
+                    )
                 } catch (error: JsonSyntaxException) {
                     throw Exception("This QR code does not represent a valid customer", error)
                 }
