@@ -43,10 +43,10 @@ interface RestaurantDao {
     suspend fun getCartItemIdByMenuCourseId(id: Int): Int?
 
     @Query("UPDATE cart SET quantity = quantity + :quantity WHERE id = :id")
-    suspend fun incrementCartItemQuantityById(id: Int, quantity: Int)
+    suspend fun incrementQuantityInCartById(id: Int, quantity: Int)
 
     @Query("UPDATE cart SET quantity = :quantity WHERE id = :id")
-    suspend fun updateCartItemQuantityById(id: Int, quantity: Int)
+    suspend fun updateQuantityInCartById(id: Int, quantity: Int)
 
     @Query("DELETE FROM cart WHERE id = :id")
     suspend fun deleteItemFromCartById(id: Int)

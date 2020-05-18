@@ -69,11 +69,11 @@ object RestaurantRepository {
     }
 
     suspend fun incrementQuantityInCart(id: Int, quantity: Int) {
-        restaurantDao.incrementCartItemQuantityById(id, quantity)
+        restaurantDao.incrementQuantityInCartById(id, quantity)
     }
 
     suspend fun updateQuantityInCart(id: Int, quantity: Int) {
-        restaurantDao.updateCartItemQuantityById(id, quantity)
+        restaurantDao.updateQuantityInCartById(id, quantity)
     }
 
     suspend fun getCartItemIdByMenuCourseId(id: Int): Int {
