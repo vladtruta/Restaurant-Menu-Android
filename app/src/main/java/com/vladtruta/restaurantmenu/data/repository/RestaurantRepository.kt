@@ -97,11 +97,6 @@ object RestaurantRepository {
         return restaurantDao.getAllOrderedItemsSuspend()
     }
 
-    suspend fun getOrderedItemById(id: Int): OrderedItem {
-        return restaurantDao.getOrderedItemById(id)
-            ?: throw Exception("Could not find order with id $id")
-    }
-
     fun getOrderedItemsTotalPrice(): LiveData<Int> {
         return restaurantDao.getOrderedItemsTotalPrice()
     }
@@ -110,7 +105,7 @@ object RestaurantRepository {
         restaurantDao.insertOrderedItem(orderedItem)
     }
 
-    suspend fun insertOrAddToOrderedItems(cartItems: List<CartItem>) {
+    suspend fun insertOrIncrementOrderedItems(cartItems: List<CartItem>) {
         withContext(Dispatchers.Default) {
             cartItems.forEach { cartItem ->
                 val orderedItem = restaurantDao.getOrderedItemByMenuCourseId(cartItem.menuCourse.id)
@@ -124,10 +119,11 @@ object RestaurantRepository {
     }
 
     suspend fun updateCustomerOfOrderedItem(id: Int, customer: Customer?) {
-        val orderedItem = getOrderedItemById(id)
+        val orderedItem = restaurantDao.getOrderedItemById(id)
+            ?: throw Exception("Could not find order with id $id")
         restaurantDao.updateOrderedItem(orderedItem.apply { this.payingCustomer = customer })
     }
-    
+
     suspend fun clearOrderedItems() {
         restaurantDao.clearOrderedItems()
     }

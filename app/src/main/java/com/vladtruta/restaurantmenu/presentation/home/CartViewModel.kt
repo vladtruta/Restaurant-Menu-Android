@@ -63,7 +63,7 @@ class CartViewModel : ViewModel() {
 
     fun insertOrderedItems() {
         viewModelScope.launch {
-            RestaurantRepository.insertOrAddToOrderedItems(cartItems.value!!)
+            RestaurantRepository.insertOrIncrementOrderedItems(cartItems.value!!)
             RestaurantRepository.clearCart()
             if (_splitPayEnabled.value == true) {
                 updateOrderedItemsLayout()
@@ -102,7 +102,7 @@ class CartViewModel : ViewModel() {
                 }
             } else {
                 val cartItems = orderedItems.map { it.cartItem }
-                RestaurantRepository.insertOrAddToOrderedItems(cartItems)
+                RestaurantRepository.insertOrIncrementOrderedItems(cartItems)
             }
         }
     }
