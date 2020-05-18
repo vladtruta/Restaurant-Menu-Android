@@ -15,4 +15,7 @@ data class OrderedItem(
     var payingCustomer: Customer? = null,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
-) : Parcelable
+) : Parcelable {
+
+
+}

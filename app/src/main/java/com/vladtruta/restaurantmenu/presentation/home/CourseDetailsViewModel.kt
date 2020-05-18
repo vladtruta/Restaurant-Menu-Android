@@ -38,7 +38,7 @@ class CourseDetailsViewModel : ViewModel() {
             if (rowId == DEFAULT_ROW_ID) {
                 rowId = RestaurantRepository.addItemToCart(menuCourse, quantity).toInt()
             } else {
-                RestaurantRepository.addQuantityToAlreadyExistingInCart(rowId, quantity)
+                RestaurantRepository.incrementQuantityInCart(rowId, quantity)
                 itemAlreadyExists = true
             }
         }
@@ -47,7 +47,7 @@ class CourseDetailsViewModel : ViewModel() {
     fun undoCart(quantity: Int) {
         viewModelScope.launch(messageExceptionHandler) {
             if (itemAlreadyExists) {
-                RestaurantRepository.addQuantityToAlreadyExistingInCart(rowId, -quantity)
+                RestaurantRepository.incrementQuantityInCart(rowId, -quantity)
             } else {
                 RestaurantRepository.deleteItemFromCart(rowId)
                 itemAlreadyExists = false

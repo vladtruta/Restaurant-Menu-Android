@@ -68,7 +68,7 @@ object RestaurantRepository {
         return restaurantDao.addItemToCart(item)
     }
 
-    suspend fun addQuantityToAlreadyExistingInCart(id: Int, quantity: Int) {
+    suspend fun incrementQuantityInCart(id: Int, quantity: Int) {
         val cartItem = getCartItemById(id)
         restaurantDao.updateCartItem(cartItem.apply { this.quantity += quantity })
     }
