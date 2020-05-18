@@ -69,18 +69,11 @@ object RestaurantRepository {
     }
 
     suspend fun incrementQuantityInCart(id: Int, quantity: Int) {
-        val cartItem = getCartItemById(id)
-        restaurantDao.updateCartItem(cartItem.apply { this.quantity += quantity })
+        restaurantDao.incrementCartItemQuantityById(id, quantity)
     }
 
     suspend fun updateQuantityInCart(id: Int, quantity: Int) {
-        val cartItem = getCartItemById(id)
-        restaurantDao.updateCartItem(cartItem.apply { this.quantity = quantity })
-    }
-
-    suspend fun getCartItemById(id: Int): CartItem {
-        return restaurantDao.getCartItemById(id)
-            ?: throw Exception("Could not find item with id $id")
+        restaurantDao.updateCartItemQuantityById(id, quantity)
     }
 
     suspend fun getCartItemIdByMenuCourseId(id: Int): Int {

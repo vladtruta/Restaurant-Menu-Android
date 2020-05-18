@@ -42,8 +42,11 @@ interface RestaurantDao {
     @Query("SELECT id FROM cart WHERE menuCourse_id = :id")
     suspend fun getCartItemIdByMenuCourseId(id: Int): Int?
 
-    @Update
-    suspend fun updateCartItem(cartItem: CartItem)
+    @Query("UPDATE cart SET quantity = quantity + :quantity WHERE id = :id")
+    suspend fun incrementCartItemQuantityById(id: Int, quantity: Int)
+
+    @Query("UPDATE cart SET quantity = :quantity WHERE id = :id")
+    suspend fun updateCartItemQuantityById(id: Int, quantity: Int)
 
     @Query("DELETE FROM cart WHERE id = :id")
     suspend fun deleteItemFromCartById(id: Int)
