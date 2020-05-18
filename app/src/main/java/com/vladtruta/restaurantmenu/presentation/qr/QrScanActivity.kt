@@ -42,7 +42,8 @@ class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks 
     private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
 
-    private val toastHandler = Handler()
+    private val toastSuccessHandler = Handler()
+    private val toastErrorHandler = Handler()
 
     private lateinit var cameraExecutor: Executor
 
@@ -78,15 +79,16 @@ class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks 
     }
 
     override fun onDestroy() {
-        toastHandler.removeCallbacksAndMessages(null)
+        toastSuccessHandler.removeCallbacksAndMessages(null)
+        toastErrorHandler.removeCallbacksAndMessages(null)
 
         super.onDestroy()
     }
 
     private fun initObservers() {
         viewModel.errorMessage.observe(this, Observer {
-            toastHandler.removeCallbacksAndMessages(null)
-            toastHandler.postDelayed({
+            toastErrorHandler.removeCallbacksAndMessages(null)
+            toastErrorHandler.postDelayed({
                 Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
             }, TOAST_HANDLER_DELAY)
 
@@ -94,8 +96,8 @@ class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks 
         })
 
         viewModel.customerAddedSuccessMessage.observe(this, Observer {
-            toastHandler.removeCallbacksAndMessages(null)
-            toastHandler.postDelayed({
+            toastSuccessHandler.removeCallbacksAndMessages(null)
+            toastSuccessHandler.postDelayed({
                 Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
             }, TOAST_HANDLER_DELAY)
 

@@ -7,7 +7,5 @@ data class KitchenRequest(
     @SerializedName("cartItems")
     val cartItems: List<CartItem>,
     @SerializedName("tableName")
-    val tableName: String,
-    @SerializedName("_id")
-    val id: Int
+    val tableName: String
 )

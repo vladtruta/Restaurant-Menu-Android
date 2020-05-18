@@ -15,6 +15,6 @@ data class KitchenOrder(
     val id: Int = 0
 ) : Parcelable {
     fun toKitchenRequest(): KitchenRequest {
-        return KitchenRequest(cartItems, tableName, id)
+        return KitchenRequest(cartItems, tableName)
     }
 }
