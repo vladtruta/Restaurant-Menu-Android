@@ -30,7 +30,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val waiterPasswordPreference = findPreference<EditTextPreference>("waiter_password")
 
         waiterPasswordPreference?.setOnBindEditTextListener {
-            it.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            it.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
             it.setSelection(it.text.length)
         }
     }
