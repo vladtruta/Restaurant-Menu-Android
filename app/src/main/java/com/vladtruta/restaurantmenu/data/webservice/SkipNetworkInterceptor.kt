@@ -32,7 +32,7 @@ private val categories = listOf(
 
 private val menuCourses = listOf(
     MenuCourse(
-        Constants.MenuCategories.MAIN_COURSES,
+        Category(Constants.MenuCategories.MAIN_COURSES),
         "Chilli con carne",
         "A spicy stew containing chili peppers, meat, and often tomatoes and beans. ",
         "https://food-images.files.bbci.co.uk/food/recipes/chilliconcarne_67875_16x9.jpg",
@@ -40,7 +40,7 @@ private val menuCourses = listOf(
         25
     ),
     MenuCourse(
-        Constants.MenuCategories.MAIN_COURSES,
+        Category(Constants.MenuCategories.MAIN_COURSES),
         "Chicken tikka masala",
         "Chicken tikka masala is an Indian dish consisting of marinated pieces of chicken breast that are first strung on a skewer and then roasted in a tandoor oven until they are crunchy on the outside and tender on the inside. The pieces of chicken are then braised in a creamy tomato sauce with paprika. \n" +
                 "\n" +
@@ -52,7 +52,7 @@ private val menuCourses = listOf(
         28
     ),
     MenuCourse(
-        Constants.MenuCategories.MAIN_COURSES,
+        Category(Constants.MenuCategories.MAIN_COURSES),
         "Roasted pork tenderloin",
         "A cut of meat from a pig, created from the tissue along the dorsal side of the rib cage.",
         "https://cdn-image.foodandwine.com/sites/default/files/styles/medium_2x/public/201307-xl-spice-roasted-pork-tenderloin.jpg?itok=VoUYF6Eq",
@@ -60,7 +60,7 @@ private val menuCourses = listOf(
         37
     ),
     MenuCourse(
-        Constants.MenuCategories.STARTERS,
+        Category(Constants.MenuCategories.STARTERS),
         "Eggs Benedict",
         "An American breakfast or brunch dish that consists of two halves of an English muffin topped with a poached egg, bacon or ham, and hollandaise sauce.",
         "https://prods3.imgix.net/images/articles/2017_08/Non-Feature-eggs-benedict-recipe-breakfast1.jpg",
@@ -68,7 +68,7 @@ private val menuCourses = listOf(
         14
     ),
     MenuCourse(
-        Constants.MenuCategories.DESSERTS,
+        Category(Constants.MenuCategories.DESSERTS),
         "Chocolate cake",
         "A cake flavored with melted chocolate, cocoa powder, or both.",
         "https://food-images.files.bbci.co.uk/food/recipes/easy_chocolate_cake_31070_16x9.jpg",
@@ -76,7 +76,7 @@ private val menuCourses = listOf(
         16
     ),
     MenuCourse(
-        Constants.MenuCategories.DESSERTS,
+        Category(Constants.MenuCategories.DESSERTS),
         "Strawberry pudding",
         "A simple glazed strawberry mixture is layered with creamy pudding, whipped cream, and vanilla wafer cookies.",
         "https://3.bp.blogspot.com/-nVmA43OFeGk/W3TjRApNPhI/AAAAAAAApLM/yjSlIhq0E34X07L1jroRG2qENlhC1ljnACLcBGAs/s1600/Strawberry-Pudding-Photo.JPG",
@@ -84,7 +84,7 @@ private val menuCourses = listOf(
         8
     ),
     MenuCourse(
-        Constants.MenuCategories.BEVERAGES,
+        Category(Constants.MenuCategories.BEVERAGES),
         "Mineral water",
         "Plain and simple mineral water",
         "https://www.healthxchange.sg/sites/hexassets/Assets/women/urinary-stones-drink-sparkling-mineral-water.jpg",
@@ -92,7 +92,7 @@ private val menuCourses = listOf(
         6
     ),
     MenuCourse(
-        Constants.MenuCategories.BEVERAGES,
+        Category(Constants.MenuCategories.BEVERAGES),
         "Sauvignon blanc",
         "A green-skinned grape variety that originates from the Bordeaux region of France.",
         "https://static.independent.co.uk/s3fs-public/thumbnails/image/2018/05/02/12/best-sauvignon-blanc.jpg?w968h681",
@@ -100,7 +100,7 @@ private val menuCourses = listOf(
         12
     ),
     MenuCourse(
-        Constants.MenuCategories.BEVERAGES,
+        Category(Constants.MenuCategories.BEVERAGES),
         "Craft beer",
         "A beer made in a traditional or non-mechanized way by a small brewery.",
         "https://static.vinepair.com/wp-content/uploads/2018/06/beer-bubble-cover-mobile.jpg",
@@ -108,7 +108,7 @@ private val menuCourses = listOf(
         10
     ),
     MenuCourse(
-        Constants.MenuCategories.BEVERAGES,
+        Category(Constants.MenuCategories.BEVERAGES),
         "Orange juice",
         "A liquid extract of the orange tree fruit, produced by squeezing or reaming oranges.",
         "https://www.earthfoodandfire.com/wp-content/uploads/2018/04/Homemade-Orange-Juice.jpg",
@@ -116,7 +116,7 @@ private val menuCourses = listOf(
         11
     ),
     MenuCourse(
-        Constants.MenuCategories.BEVERAGES,
+        Category(Constants.MenuCategories.BEVERAGES),
         "Mountain Dew",
         "A carbonated soft drink brand produced and owned by PepsiCo. The original formula was invented in 1940 by beverage bottlers Barney and Ally Hartman.",
         "https://radioimg.s3.amazonaws.com/wycdfm/styles/delta__775x515/s3/Mountain_Dew.jpg?itok=9MtiFKbH",
@@ -124,7 +124,7 @@ private val menuCourses = listOf(
         7
     ),
     MenuCourse(
-        Constants.MenuCategories.BEVERAGES,
+        Category(Constants.MenuCategories.BEVERAGES),
         "Piña Colada",
         "A sweet cocktail made with rum, cream of coconut or coconut milk, and pineapple juice, usually served either blended or shaken with ice.",
         "https://www.thespruceeats.com/thmb/cDQK02EZOGbvxzBzV_u7-2-woTk=/4494x3000/filters:fill(auto,1)/virgin-pina-colada-recipe-2097115_05-5b0d8124ff1b7800364356ae.jpg",
