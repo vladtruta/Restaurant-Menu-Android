@@ -17,7 +17,7 @@ class MenuViewModel: ViewModel() {
 
     fun getMenuCoursesByCategory(category: Category) {
         viewModelScope.launch {
-            val result = RestaurantRepository.getMenuCoursesByCategory(category.name)
+            val result = RestaurantRepository.getMenuCoursesByCategory(category)
             _filteredMenuCourses.value = result
         }
     }

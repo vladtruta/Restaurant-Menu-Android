@@ -12,8 +12,8 @@ interface RestaurantDao {
     @Query("SELECT * FROM menu")
     fun getAllMenuCourses(): LiveData<List<MenuCourse>>
 
-    @Query("SELECT * FROM menu WHERE category = :category")
-    suspend fun getMenuCoursesByCategory(category: String): List<MenuCourse>
+    @Query("SELECT * FROM menu WHERE category_id = :id")
+    suspend fun getMenuCoursesByCategoryId(id: Int): List<MenuCourse>
 
     @Query("DELETE FROM menu")
     suspend fun clearMenuCourses()

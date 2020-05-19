@@ -51,8 +51,8 @@ object RestaurantRepository {
         return restaurantDao.getAllCategories()
     }
 
-    suspend fun getMenuCoursesByCategory(category: String): List<MenuCourse> {
-        return restaurantDao.getMenuCoursesByCategory(category)
+    suspend fun getMenuCoursesByCategory(category: Category): List<MenuCourse> {
+        return restaurantDao.getMenuCoursesByCategoryId(category.id)
     }
 
     fun getAllCartItems(): LiveData<List<CartItem>> {
