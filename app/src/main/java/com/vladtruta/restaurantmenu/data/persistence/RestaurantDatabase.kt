@@ -15,12 +15,12 @@ abstract class RestaurantDatabase : RoomDatabase() {
     abstract val restaurantDao: RestaurantDao
 }
 
-private lateinit var INSTANCE: RestaurantDatabase
+private lateinit var instance: RestaurantDatabase
 
 fun getDatabase(context: Context): RestaurantDatabase {
     synchronized(RestaurantDatabase::class) {
-        if (!::INSTANCE.isInitialized) {
-            INSTANCE = Room
+        if (!::instance.isInitialized) {
+            instance = Room
                 .databaseBuilder(
                     context.applicationContext,
                     RestaurantDatabase::class.java,
@@ -30,5 +30,5 @@ fun getDatabase(context: Context): RestaurantDatabase {
                 .build()
         }
     }
-    return INSTANCE
+    return instance
 }
