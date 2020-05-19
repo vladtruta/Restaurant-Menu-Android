@@ -9,15 +9,15 @@ import kotlinx.coroutines.*
 
 class SplashViewModel : ViewModel() {
 
-    private val _refreshSuccessful = MutableLiveData<Boolean>()
-    val refreshSuccessful: LiveData<Boolean> = _refreshSuccessful
-
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
 
     private val messageExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         _errorMessage.postValue(throwable.message)
     }
+
+    private val _refreshSuccessful = MutableLiveData<Boolean>()
+    val refreshSuccessful: LiveData<Boolean> = _refreshSuccessful
 
     fun refresh() {
         _refreshSuccessful.value = false
