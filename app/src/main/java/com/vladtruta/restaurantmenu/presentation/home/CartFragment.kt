@@ -181,7 +181,7 @@ class CartFragment : Fragment(),
         })
 
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).setAnchorView(binding.payEfab)
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).setAnchorView(binding.confirmEfab)
                 .show()
         })
 
@@ -217,6 +217,11 @@ class CartFragment : Fragment(),
                 childFragmentManager,
                 PaymentSummaryDialogFragment.TAG
             )
+        })
+
+        viewModel.sendKitchenRequestMessage.observe(viewLifecycleOwner, Observer {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).setAnchorView(binding.confirmEfab)
+                .show()
         })
     }
 

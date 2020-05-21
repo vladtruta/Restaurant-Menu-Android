@@ -34,6 +34,9 @@ class CartViewModel : ViewModel() {
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
 
+    private val _sendKitchenRequestMessage = MutableLiveData<String>()
+    val sendKitchenRequestMessage: LiveData<String> = _sendKitchenRequestMessage
+
     private val _splitPayEnabled = MutableLiveData<Boolean>()
     val splitPayEnabled: LiveData<Boolean> = _splitPayEnabled
 
@@ -64,6 +67,7 @@ class CartViewModel : ViewModel() {
     fun sendKitchenRequest() {
         viewModelScope.launch(messageExceptionHandler) {
             RestaurantRepository.sendKitchenRequest(cartItems.value!!, SessionUtils.getTableName())
+            _sendKitchenRequestMessage.value = UIUtils.getString(R.string.order_processed_successfully)
         }
     }
 
