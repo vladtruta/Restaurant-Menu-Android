@@ -167,10 +167,12 @@ class CartViewModel : ViewModel() {
                                 )
                             }
                         }
-                    val totalPrice =
-                        orderedItemsOfCustomer.sumBy { it.quantity * it.menuCourse.price }
-                    val summary = PaymentSummary(orderedItemsOfCustomer, customer, totalPrice)
-                    paymentSummaryList.add(summary)
+                    if (orderedItemsOfCustomer.isNotEmpty()) {
+                        val totalPrice =
+                            orderedItemsOfCustomer.sumBy { it.quantity * it.menuCourse.price }
+                        val summary = PaymentSummary(orderedItemsOfCustomer, customer, totalPrice)
+                        paymentSummaryList.add(summary)
+                    }
                 }
             } else {
                 val orderedCartItems = orderedItems.map { it.cartItem }
