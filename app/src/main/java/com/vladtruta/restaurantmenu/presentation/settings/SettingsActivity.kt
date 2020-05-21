@@ -3,16 +3,18 @@ package com.vladtruta.restaurantmenu.presentation.settings
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.vladtruta.restaurantmenu.R
-import kotlinx.android.synthetic.main.activity_settings.*
+import com.vladtruta.restaurantmenu.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivitySettingsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setSupportActionBar(settings_mtb)
+        setSupportActionBar(binding.settingsMtb)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

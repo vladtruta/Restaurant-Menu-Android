@@ -17,8 +17,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.vladtruta.restaurantmenu.R
+import com.vladtruta.restaurantmenu.databinding.ActivityQrScanBinding
 import com.vladtruta.restaurantmenu.utils.UIUtils
-import kotlinx.android.synthetic.main.activity_qr_scan.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -37,6 +37,7 @@ class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks 
     }
 
     private val viewModel by viewModels<QrScanViewModel>()
+    private lateinit var binding: ActivityQrScanBinding
 
     private var preview: Preview? = null
     private var imageAnalyzer: ImageAnalysis? = null
@@ -58,9 +59,10 @@ class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_qr_scan)
+        binding = ActivityQrScanBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setSupportActionBar(qr_scan_mtb)
+        setSupportActionBar(binding.qrScanMtb)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -130,7 +132,7 @@ class QrScanActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks 
                         preview,
                         imageAnalyzer
                     )
-                    preview?.setSurfaceProvider(camera_txv.createSurfaceProvider(camera?.cameraInfo))
+                    preview?.setSurfaceProvider(binding.cameraTxv.createSurfaceProvider(camera?.cameraInfo))
                 } catch (error: Exception) {
                     Log.e(TAG, "Use case binding failed", error)
                 }
