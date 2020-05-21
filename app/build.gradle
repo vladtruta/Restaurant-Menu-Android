@@ -43,5 +43,4 @@ android {
 dependencies {
     implementation libraries
     kapt librariesKapt
-    implementation 'androidx.work:work-runtime-ktx:2.3.4'
 }
