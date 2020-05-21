@@ -9,11 +9,10 @@ private lateinit var instance: RestaurantApi
 fun getNetwork(): RestaurantApi {
     if (!::instance.isInitialized) {
         val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(SkipNetworkInterceptor())
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://localhost/")
+            .baseUrl("http://10.0.2.2/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

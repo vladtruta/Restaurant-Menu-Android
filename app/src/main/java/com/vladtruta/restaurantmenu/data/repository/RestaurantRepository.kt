@@ -18,7 +18,12 @@ object RestaurantRepository {
     suspend fun refreshCategories() {
         val categories = withContext(Dispatchers.Default) {
             try {
-                restaurantNetwork.getAllCategories().toTypedArray()
+                val response = restaurantNetwork.getAllCategories()
+                if (response.success) {
+                    restaurantNetwork.getAllCategories().data.toTypedArray()
+                } else {
+                    throw Exception()
+                }
             } catch (error: Exception) {
                 throw Exception("Unable to refresh categories", error)
             }
@@ -29,7 +34,12 @@ object RestaurantRepository {
     suspend fun refreshMenuCourses() {
         val menuCourses = withContext(Dispatchers.Default) {
             try {
-                restaurantNetwork.getAllMenuCourses().toTypedArray()
+                val response = restaurantNetwork.getAllMenuCourses()
+                if (response.success) {
+                    restaurantNetwork.getAllMenuCourses().data.toTypedArray()
+                } else {
+                    throw Exception()
+                }
             } catch (error: Exception) {
                 throw Exception("Unable to refresh menu courses", error)
             }
