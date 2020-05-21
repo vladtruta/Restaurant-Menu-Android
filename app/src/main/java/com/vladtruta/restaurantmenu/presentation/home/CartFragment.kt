@@ -295,11 +295,11 @@ class CartFragment : Fragment(),
     }
 
     override fun onPaymentConfirmed() {
-        viewModel.payForOrder()
         Toast.makeText(
             requireContext(),
             UIUtils.getString(R.string.thank_you_for_order),
             Toast.LENGTH_LONG
         ).show()
+        viewModel.payForOrder()
     }
 }
