@@ -55,4 +55,5 @@
     <string name="error_customers_empty">Please add customers by scanning your given QR codes.</string>
     <string name="payment_method">Pay:</string>
     <string name="order_processed_successfully">Order has been processed successfully!</string>
+    <string name="pending_order_processed_successfully">Pending order has been processed successfully!</string>
 </resources>

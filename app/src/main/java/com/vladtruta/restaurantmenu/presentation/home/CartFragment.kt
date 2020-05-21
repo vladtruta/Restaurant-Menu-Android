@@ -13,12 +13,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.vladtruta.restaurantmenu.R
 import com.vladtruta.restaurantmenu.data.model.local.CartItem
 import com.vladtruta.restaurantmenu.data.model.local.OrderedItem
+import com.vladtruta.restaurantmenu.data.work.WorkUtils
 import com.vladtruta.restaurantmenu.databinding.FragmentCartBinding
 import com.vladtruta.restaurantmenu.presentation.home.adapter.CartOrderedAdapter
 import com.vladtruta.restaurantmenu.presentation.home.adapter.CartPendingAdapter
@@ -181,7 +184,8 @@ class CartFragment : Fragment(),
         })
 
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).setAnchorView(binding.confirmEfab)
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.confirmEfab)
                 .show()
         })
 
@@ -220,9 +224,22 @@ class CartFragment : Fragment(),
         })
 
         viewModel.sendKitchenRequestMessage.observe(viewLifecycleOwner, Observer {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).setAnchorView(binding.confirmEfab)
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.confirmEfab)
                 .show()
         })
+
+        WorkManager.getInstance(requireContext())
+            .getWorkInfosByTagLiveData(WorkUtils.TAG_SEND_KITCHEN_ORDER)
+            .observe(viewLifecycleOwner, Observer { results ->
+                if (results != null && results.all { it.state == WorkInfo.State.SUCCEEDED }) {
+                    Snackbar.make(
+                        binding.root,
+                        R.string.pending_order_processed_successfully,
+                        Snackbar.LENGTH_SHORT
+                    ).setAnchorView(binding.confirmEfab).show()
+                }
+            })
     }
 
     private fun initActions() {

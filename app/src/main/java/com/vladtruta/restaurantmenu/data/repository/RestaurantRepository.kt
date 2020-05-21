@@ -1,10 +1,12 @@
 package com.vladtruta.restaurantmenu.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.work.WorkManager
 import com.vladtruta.restaurantmenu.data.model.local.*
 import com.vladtruta.restaurantmenu.data.model.requests.KitchenRequest
 import com.vladtruta.restaurantmenu.data.persistence.getDatabase
 import com.vladtruta.restaurantmenu.data.webservice.getNetwork
+import com.vladtruta.restaurantmenu.data.work.WorkUtils
 import com.vladtruta.restaurantmenu.utils.RestaurantApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -53,7 +55,8 @@ object RestaurantRepository {
             val kitchenRequest = KitchenRequest(cartItems, tableName)
             restaurantNetwork.sendKitchenRequest(kitchenRequest)
         } catch (error: Exception) {
-            throw Exception("Unable to send kitchen request", error)
+            WorkUtils.enqueueSendKitchenOrder(cartItems, tableName)
+            throw Exception("Unable to send kitchen request; request has been queued.", error)
         }
     }
     //endregion
@@ -65,6 +68,8 @@ object RestaurantRepository {
         restaurantDao.clearCategories()
         restaurantDao.clearOrderedItems()
         restaurantDao.clearCustomers()
+        WorkManager.getInstance(RestaurantApp.instance).cancelAllWork()
+        WorkManager.getInstance(RestaurantApp.instance).pruneWork()
     }
 
     fun getAllCategories(): LiveData<List<Category>> {
