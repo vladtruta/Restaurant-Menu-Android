@@ -49,8 +49,12 @@ object RestaurantRepository {
     }
 
     suspend fun sendKitchenRequest(cartItems: List<CartItem>, tableName: String) {
-        val kitchenRequest = KitchenRequest(cartItems, tableName)
-        restaurantNetwork.sendKitchenRequest(kitchenRequest)
+        try {
+            val kitchenRequest = KitchenRequest(cartItems, tableName)
+            restaurantNetwork.sendKitchenRequest(kitchenRequest)
+        } catch (error: Exception) {
+            throw Exception("Unable to send kitchen request", error)
+        }
     }
     //endregion
 

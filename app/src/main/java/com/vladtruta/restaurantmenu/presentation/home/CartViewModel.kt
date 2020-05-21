@@ -62,7 +62,7 @@ class CartViewModel : ViewModel() {
     }
 
     fun sendKitchenRequest() {
-        viewModelScope.launch {
+        viewModelScope.launch(messageExceptionHandler) {
             RestaurantRepository.sendKitchenRequest(cartItems.value!!, SessionUtils.getTableName())
         }
     }
