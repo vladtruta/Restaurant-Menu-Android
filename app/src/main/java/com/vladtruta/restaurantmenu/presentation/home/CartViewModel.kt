@@ -61,6 +61,12 @@ class CartViewModel : ViewModel() {
         }
     }
 
+    fun sendKitchenRequest() {
+        viewModelScope.launch {
+            RestaurantRepository.sendKitchenRequest(cartItems.value!!, SessionUtils.getTableName())
+        }
+    }
+
     fun insertOrderedItems() {
         viewModelScope.launch {
             RestaurantRepository.insertOrIncrementOrderedItems(cartItems.value!!)

@@ -2,6 +2,7 @@ package com.vladtruta.restaurantmenu.data.repository
 
 import androidx.lifecycle.LiveData
 import com.vladtruta.restaurantmenu.data.model.local.*
+import com.vladtruta.restaurantmenu.data.model.requests.KitchenRequest
 import com.vladtruta.restaurantmenu.data.persistence.getDatabase
 import com.vladtruta.restaurantmenu.data.webservice.getNetwork
 import com.vladtruta.restaurantmenu.utils.RestaurantApp
@@ -45,6 +46,11 @@ object RestaurantRepository {
             }
         }
         restaurantDao.insertMenuCourses(*menuCourses)
+    }
+
+    suspend fun sendKitchenRequest(cartItems: List<CartItem>, tableName: String) {
+        val kitchenRequest = KitchenRequest(cartItems, tableName)
+        restaurantNetwork.sendKitchenRequest(kitchenRequest)
     }
     //endregion
 

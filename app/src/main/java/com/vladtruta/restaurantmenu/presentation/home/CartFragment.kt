@@ -248,6 +248,7 @@ class CartFragment : Fragment(),
                 .setTitle(R.string.are_you_sure)
                 .setMessage(R.string.confirm_order_message)
                 .setPositiveButton(R.string.yes) { _, _ ->
+                    viewModel.sendKitchenRequest()
                     viewModel.insertOrderedItems()
                 }
                 .setNegativeButton(R.string.no) { _, _ -> }
