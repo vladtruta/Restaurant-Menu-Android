@@ -235,7 +235,7 @@ class CartFragment : Fragment(),
                 if (results != null && results.all { it.state == WorkInfo.State.SUCCEEDED }) {
                     Snackbar.make(
                         binding.root,
-                        R.string.pending_order_processed_successfully,
+                        R.string.pending_orders_processed_successfully,
                         Snackbar.LENGTH_SHORT
                     ).setAnchorView(binding.confirmEfab).show()
                 }
